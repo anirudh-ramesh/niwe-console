@@ -107,7 +107,7 @@
                      <span>Dashboard</span>            
                      </a>      
                      <ul class="active treeview-menu">
-                        <li><a href="chart.php"><i class="fa fa-line-chart"></i>View Irradiance</a></li>                        
+                        <li><a href="irradiance_time.php"><i class="fa fa-line-chart"></i>View Irradiance-Time Plot</a></li>                        
                      </ul>
                   </li>
                   <li>
@@ -221,7 +221,7 @@
 									 if (station.length > 0) {                    
 										 $.ajax({
 											 type: "POST",
-											 url: "chart.php",
+											 url: "irradiance_time.php",
 											 data: "station=" + station,
 											 cache: false,                                 
 											 success: function(html) {
