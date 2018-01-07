@@ -113,7 +113,7 @@ include("config/config.php");
                      </a>
                   </li>
                   <li>
-                     <a href="pages/upload_csv/">
+                     <a href="pages/data_configuration/">
                      <i class="fa fa-file-text-o"></i> <span>Data Config</span>            
                      </a>
                   </li>

@@ -106,7 +106,7 @@
                      </a>
                   </li>
                   <li>
-                     <a href="../upload_csv/">
+                     <a href="../data_configuration/">
                      <i class="fa fa-file-text-o"></i> <span>Data Config</span>               
                      </a>
                   </li>
