@@ -252,7 +252,7 @@
                              },
                              credits: {
                                  //enabled: false
-                                  text: 'Source:NIWE Advance Station',
+                                  text: 'NIWE AMS',
                                   href: '#'
                              },                             
                              title: {
@@ -268,7 +268,7 @@
                              },
                              yAxis: {
                                  title: {
-                                     text: 'Direct Normal Irradiance(W/m2)/nm'
+                                     text: 'Direct Normal Irradiance (W/m2)/nm'
                                  },
                                  plotLines: [{
                                          value: 0,
