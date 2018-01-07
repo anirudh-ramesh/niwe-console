@@ -104,7 +104,7 @@ include("config/config.php");
                      <span>Dashboard</span>            
                      </a>      
                      <ul class="treeview-menu">
-                        <li><a href="pages/station/irradiance_time.php"><i class="fa fa-line-chart"></i>View Irradiance-Time Plot</a></li>                        
+                        <li><a href="pages/data_visualization/irradiance_time.php"><i class="fa fa-line-chart"></i>View Irradiance-Time Plot</a></li>                        
                      </ul>
                   </li>                  
                   <li>
