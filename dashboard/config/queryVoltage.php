@@ -16,6 +16,7 @@ $es_functionNumber = "NumFuncion";
 $iChannels = 16;
 $nChannels = 10;
 
+$granularity = 5;
 $start_time = "00:00:00";
 $end_time = "00:01:00";
 $start_date = "2018-01-07 " . $start_time;
@@ -30,10 +31,10 @@ $subquery_suffix = " AND " . $es_time . " BETWEEN '" . $start_date . "' AND '" .
 
 $query_prefix = "SELECT ";
 for ($index = 1; $index <= $nChannels; $index++) {
-	$query_prefix = $query_prefix . "set" . (string)$index . "." . $es_value . " AS voltage" . (string)$index . ", ";
+	$query_prefix = $query_prefix . "AVG(set" . (string)$index . "." . $es_value . ") AS voltage" . (string)$index . ", ";
 }
-$query_prefix = $query_prefix . "set1." . $es_stationNumber . " AS station, ";
-$query_prefix = $query_prefix . "set1." . $es_time . " AS timestmp ";
+// $query_prefix = $query_prefix . "set1." . $es_stationNumber . " AS station, ";
+$query_prefix = $query_prefix . "MAX(set1." . $es_time . ") AS timestmp ";
 $query_prefix = $query_prefix . "from ";
 
 $query = $query_prefix . "\n" . $subquery_prefix . (string)$iChannels . $subquery_suffix . " AS set1 inner join \n";
@@ -44,7 +45,7 @@ for ($channel = $iChannels + 1; $channel <= $iChannels + $nChannels - 1; $channe
 		$query = $query . " inner join \n";
 	}
 	else {
-		$query = $query . "\n";
+		$query = $query . "\n GROUP BY (DATEPART(MINUTE, set1." . $es_time . ") / " . (string)$granularity . ")";
 	}
 }
 
