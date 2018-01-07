@@ -1,5 +1,5 @@
 <?php
-   include("../../../check.php");   
+   include("../../../check.php");
    ?>
 <!DOCTYPE html>
 <html>
@@ -24,7 +24,7 @@
          folder instead of downloading all of them to reduce the load. -->
       <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">
       <!-- iCheck -->
-      <link rel="stylesheet" href="../../plugins/iCheck/flat/blue.css">      
+      <link rel="stylesheet" href="../../plugins/iCheck/flat/blue.css">
    </head>
    <body class="hold-transition skin-blue sidebar-mini" oncontextmenu="return false">
       <div class="wrapper">
@@ -58,7 +58,7 @@
                            <li class="user-header">
                               <img src="../../dist/img/logo.jpg" class="img-circle" alt="User Image">
                               <p>
-                                 <!--<?php echo $login_user;?>-->SGS Weather                                 
+                                 <!--<?php echo $login_user;?>-->SGS Weather
                               </p>
                            </li>
                            <!-- Menu Body -->
@@ -87,30 +87,30 @@
                         <!-- <?php echo $login_user; ?>-->
                         SGS Weather
                      </p>
-                    
+
                   </div>
                </div>
                <ul class="sidebar-menu">
                   <li class="treeview">
                      <a href="../../index.php">
                      <i class="fa fa-dashboard"></i>
-                     <span>Dashboard</span>            
-                     </a>      
+                     <span>Dashboard</span>
+                     </a>
                      <ul class="treeview-menu">
-                        <li><a href="../data_visualization/irradiance_time.php"><i class="fa fa-line-chart"></i>View Irradiance-Time Plot</a></li>                        
+                        <li><a href="../data_visualization/irradiance_time.php"><i class="fa fa-line-chart"></i>View Irradiance-Time Plot</a></li>
                      </ul>
                   </li>
                   <li>
                      <a href="../data_access/">
-                     <i class="fa fa-download"></i> <span>Data Access</span>            
+                     <i class="fa fa-download"></i> <span>Data Access</span>
                      </a>
                   </li>
                   <li>
                      <a href="../data_configuration/">
-                     <i class="fa fa-file-text-o"></i> <span>Data Config</span>               
+                     <i class="fa fa-file-text-o"></i> <span>Data Config</span>
                      </a>
                   </li>
-                  
+
                   <li><a href="about.php"><i class="fa fa-info-circle"></i> <span>About</span></a></li>
                </ul>
             </section>
@@ -118,7 +118,7 @@
          <!-- Content Wrapper. Contains page content -->
          <div class="content-wrapper">
             <!-- Content Header (Page header) -->
-            
+
             <!-- Main content -->
             <section class="content">
                <div class="row">

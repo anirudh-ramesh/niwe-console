@@ -2,7 +2,7 @@
 
 @import url(http://fonts.googleapis.com/css?family=Raleway);
 
- 
+
 
 h2{
 
@@ -36,19 +36,19 @@ h2{
 
 
 
- 
+
 
 div.container{
 
  width: 900px;
 
- height: 610px; 
+ height: 610px;
 
  font-family: 'Raleway', sans-serif;
 
 }
 
- 
+
 
 div.main{
 
@@ -66,7 +66,7 @@ div.main{
 
  margin-top:20px;
 
- 
+
 
 }
 
@@ -74,7 +74,7 @@ div.logo{
 
  width: 450px;
 
- padding: 10px 50px 25px; 
+ padding: 10px 50px 25px;
 
  font-family: raleway;
 
@@ -84,7 +84,7 @@ div.logo{
 
 }
 
- 
+
 
 input[type=text],input[type=password]{
 
@@ -138,7 +138,7 @@ center{
 
 }
 
- 
+
 
 .valid{
 
@@ -171,7 +171,7 @@ center{
 	font-size:16px;
 }
 
- 
+
 
 input[type=submit]{
 
@@ -197,7 +197,7 @@ input[type=submit]{
 
 }
 
- 
+
 
 input[type=submit]:hover{
 

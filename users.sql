@@ -19,7 +19,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- Mysql Table structure for `users`
 -- ----------------------------
 DROP TABLE IF EXISTS `users`;
-CREATE TABLE `users`(`uid` SERIAL PRIMARY KEY,`username` varchar(50) NOT NULL,`password` varchar(50) NOT NULL,  
+CREATE TABLE `users`(`uid` SERIAL PRIMARY KEY,`username` varchar(50) NOT NULL,`password` varchar(50) NOT NULL,
 	PRIMARY KEY (`uid`),UNIQUE KEY `username` (`username`))ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 INSERT INTO `users` VALUES ('1', 'sgsadvance', 'dc0e1aba0de3e75c5098866e701ea46a');
@@ -33,13 +33,3 @@ CREATE TABLE users("uid" SERIAL PRIMARY KEY,"username" varchar(50) NOT NULL,"pas
 MD5 hash for sgsadvance is : dc0e1aba0de3e75c5098866e701ea46a
 
 -- for SGS INSERT INTO users VALUES ('sgsadvance', '4bc8028fad044f9398d0c6f5c56e1887');
-
-
-
-
-
-
-
-
-
-

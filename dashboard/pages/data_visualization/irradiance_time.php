@@ -4,10 +4,10 @@
 <html>
    <head>
 	  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-      <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>  
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />  
-      <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>  
-      <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">      
+      <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+      <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+      <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
       <script src="http://code.highcharts.com/highcharts.js"></script>
       <script src="http://code.highcharts.com/modules/exporting.js"></script>
 	  <script src="https://code.highcharts.com/modules/no-data-to-display.js"></script>
@@ -33,7 +33,7 @@
       <link rel="stylesheet" href="../../plugins/iCheck/flat/blue.css">
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
       <style>
-         select { 
+         select {
          padding:5px;
          border: 1px solid gray;
          border-radius:5px;
@@ -46,7 +46,7 @@
          text-align:center;
          font:inherit;
          }
-      </style>     
+      </style>
    </head>
    <body class="hold-transition skin-blue sidebar-mini" oncontextmenu="return true" ">
       <div class="wrapper">
@@ -73,7 +73,7 @@
                                  " class="img-circle" alt="User Image">
                               <p>
                                  <!-- <?php echo $login_user; ?>-->
-                                 SGS Weather                                 
+                                 SGS Weather
                               </p>
                            </li>
                            <li class="user-footer">
@@ -104,20 +104,20 @@
                   <li class="treeview">
                      <a href="../../index.php">
                      <i class="fa fa-dashboard"></i>
-                     <span>Dashboard</span>            
-                     </a>      
+                     <span>Dashboard</span>
+                     </a>
                      <ul class="active treeview-menu">
-                        <li><a href="irradiance_time.php"><i class="fa fa-line-chart"></i>View Irradiance-Time Plot</a></li>                        
+                        <li><a href="irradiance_time.php"><i class="fa fa-line-chart"></i>View Irradiance-Time Plot</a></li>
                      </ul>
                   </li>
                   <li>
                      <a href="../data_access/">
-                     <i class="fa fa-download"></i> <span>Data Access</span>            
+                     <i class="fa fa-download"></i> <span>Data Access</span>
                      </a>
                   </li>
                   <li>
                      <a href="../data_configuration/">
-                     <i class="fa fa-file-text-o"></i> <span>Data Config</span>            
+                     <i class="fa fa-file-text-o"></i> <span>Data Config</span>
                      </a>
                   </li>
                   <li><a href="../about/about.php"><i class="fa fa-info-circle"></i> <span>About</span></a></li>
@@ -127,43 +127,43 @@
          <div class="content-wrapper">
             <section class="content">
             <div class="row">
-			<div class="col-md-12">			
+			<div class="col-md-12">
             <div class="container" style="width:100%;">
 			<br>
 				<div align="left" class="row">
-				<div class="col-md-12">				
+				<div class="col-md-12">
                            <?php
 						   session_start();
 						   $station = ($_REQUEST["station"] <> "") ? trim($_REQUEST["station"]) : "";
 						   $_SESSION['station'] = $_REQUEST["station"];
 						   include('../../config/config.php');
                               $query = "SELECT [NumEstacion],[Nombre] FROM [MeteoStation4K].[dbo].[Estaciones] ;";
-                                $result = sqlsrv_query($pg_index, $query);             
-                              ?> 
+                                $result = sqlsrv_query($pg_index, $query);
+                              ?>
 							  <label>Station &nbsp</label>
 							  <select name="station" onChange="selectStation(this);">
                                         <option value="">Select</option>
                                         <?php  while ($row = sqlsrv_fetch_array($result)){ ?>
                                             <option value="<?php echo $row["NumEstacion"]; ?>"><?php echo $row["Nombre"]; ?></option>
                                         <?php }  sqlsrv_close($pg_index);?>
-                              </select>                
-                </div> 
+                              </select>
+                </div>
 				</div><br>
 				<div align="center" class="row">
 			    <div class="col-md-12">
-                <div class="col-md-3">  
-                     <input type="text" name="view_chart_from_date" id="view_chart_from_date" class="form-control" placeholder="From Date" />  
-                </div>  
-                <div class="col-md-3">  
-                     <input type="text" name="view_chart_to_date" id="view_chart_to_date" class="form-control" placeholder="To Date" />  
-                </div> 
-                <div class="col-md-3">  
-                     <input type="button" name="View_Chart" id="View_Chart" value="View Irradiance" class="btn btn-info" />  
-                </div>  
+                <div class="col-md-3">
+                     <input type="text" name="view_chart_from_date" id="view_chart_from_date" class="form-control" placeholder="From Date" />
+                </div>
+                <div class="col-md-3">
+                     <input type="text" name="view_chart_to_date" id="view_chart_to_date" class="form-control" placeholder="To Date" />
+                </div>
+                <div class="col-md-3">
+                     <input type="button" name="View_Chart" id="View_Chart" value="View Irradiance" class="btn btn-info" />
+                </div>
                 <div style="clear:both"></div>
-				<br>				 
-				</div>          
-				</div>			 
+				<br>
+				</div>
+				</div>
            </div>
 		   <div class="col-md-12">
                      <div class="box">
@@ -171,12 +171,12 @@
                            <center><h3 class="box-title">Solar Plot</h3></center>
                            <div class="box-tools pull-right">
                               <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                              </button>                
+                              </button>
                               <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                            </div>
                         </div>
-                        <div class="box-body">                            
-                                 <div class="chart"> 
+                        <div class="box-body">
+                                 <div class="chart">
                                      <div id="container" style="width: 100%; height: 70%; margin: 0 auto ;"></div>
                                  <!--<div id="container" style="width: 100%; height: 70%; margin: 0 auto ; background: url(ajax-loader.gif); background-repeat: no-repeat, repeat;background-position: center center;"></div>-->
 								 </div><!-- /.empty-div for ajax call -->
@@ -202,7 +202,7 @@
             reserved.
          </footer>
       </div>
-      
+
       <!-- Bootstrap 3.3.6 -->
       <script src="../../bootstrap/js/bootstrap.min.js"></script>
       <!-- FastClick -->
@@ -216,22 +216,22 @@
 <script>
 
 		function selectStation(sel) {
-									 var station = sel.options[sel.selectedIndex].value;  
+									 var station = sel.options[sel.selectedIndex].value;
 										$("#container").html("");
-									 if (station.length > 0) {                    
+									 if (station.length > 0) {
 										 $.ajax({
 											 type: "POST",
 											 url: "irradiance_time.php",
 											 data: "station=" + station,
-											 cache: false,                                 
+											 cache: false,
 											 success: function(html) {
 												 $("#container").html("");
 											 }
 										 });
 									 }
 								 }
-								 
-         $(function () {  
+
+         $(function () {
          var options = {
                              chart: {
 								  loading: {
@@ -243,7 +243,7 @@
                                  zoomType: 'x',
                                  borderWidth: 0,
                                  resetZoomButton: {
-                                     position: {                                         
+                                     position: {
                                          x: -10,
                                          y: 10
                                      },
@@ -254,7 +254,7 @@
                                  //enabled: false
                                   text: 'NIWE AMS',
                                   href: '#'
-                             },                             
+                             },
                              title: {
                                  text: '',
                                  x: -20 //center
@@ -285,33 +285,33 @@
                                      filename: 'Irradiance_vs_Time'
                                  },
                              series: []
-                         };			 
-							   $(document).ready(function(){  
-							   $.datepicker.setDefaults({  
-									dateFormat: 'yy-mm-dd'   
-							   });  
-							   $(function(){  
-									$("#view_chart_from_date").datepicker();  
-									$("#view_chart_to_date").datepicker();  
-							   });								 
-							   $('#View_Chart').click(function(){				
-									var view_chart_from_date = $('#view_chart_from_date').val();  
-									var view_chart_to_date = $('#view_chart_to_date').val();  
-									if(view_chart_from_date != '' && view_chart_to_date != '')  
-									{  
-									 getAjaxData(view_chart_from_date, view_chart_to_date);	   
-									}  
-									else  
-									{  
-										 alert("Select Date");  
-									}  
-							   });								
+                         };
+							   $(document).ready(function(){
+							   $.datepicker.setDefaults({
+									dateFormat: 'yy-mm-dd'
+							   });
+							   $(function(){
+									$("#view_chart_from_date").datepicker();
+									$("#view_chart_to_date").datepicker();
+							   });
+							   $('#View_Chart').click(function(){
+									var view_chart_from_date = $('#view_chart_from_date').val();
+									var view_chart_to_date = $('#view_chart_to_date').val();
+									if(view_chart_from_date != '' && view_chart_to_date != '')
+									{
+									 getAjaxData(view_chart_from_date, view_chart_to_date);
+									}
+									else
+									{
+										 alert("Select Date");
+									}
+							   });
 						  });
-						  
-                 function getAjaxData(view_chart_from_date, view_chart_to_date ){					 
+
+                 function getAjaxData(view_chart_from_date, view_chart_to_date ){
                  //use getJSON to get the dynamic data via AJAX call
-                 $.getJSON('chart_data.php', {view_chart_from_date: view_chart_from_date,view_chart_to_date:view_chart_to_date}, function(json) { 
-                 
+                 $.getJSON('chart_data.php', {view_chart_from_date: view_chart_from_date,view_chart_to_date:view_chart_to_date}, function(json) {
+
 				 options.xAxis.categories = json[0]['data']; //xAxis: {categories: []}
                                 options.series[0] = json[1];
                                 options.series[1] = json[2];
@@ -322,9 +322,9 @@
                                 options.series[6] = json[7];
                                 options.series[7] = json[8];
                                 options.series[8] = json[9];
-                                options.series[9] = json[10];                        
-                                chart = new Highcharts.Chart(options);					   
-                                }); 
-                 }             
+                                options.series[9] = json[10];
+                                chart = new Highcharts.Chart(options);
+                                });
+                 }
          });
       </script>

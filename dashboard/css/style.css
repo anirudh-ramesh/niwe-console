@@ -21,7 +21,7 @@ body {
   background: #F2B880;
 }
 
- 
+
 
 
 .color-2 {
@@ -102,7 +102,7 @@ body {
   transform: translate3d(0, 0, 0);
 }
 .link--takiri:before {
-  
+
   position: absolute;
   height: 30px;
   width: 120%;

@@ -1,6 +1,6 @@
 <?php
 	include("../../../check.php");
-	if ($_SESSION['username'] != 'root') 
+	if ($_SESSION['username'] != 'root')
 	{
 		header('Location: prohibit.php');
 	}
@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
    <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
       <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <title>MITRA</title>
@@ -40,11 +40,11 @@
          }
          th, td {
          padding: 1px;
-         text-align: left;   
+         text-align: left;
          }
       </style>
       <style>
-         select { 
+         select {
          padding:5px;
          border: 1px solid gray;
          border-radius:5px;
@@ -58,118 +58,118 @@
          font:inherit;
          }
       </style>
-      <script>  
-         $(document).ready(function(){ 	
-              
-              $(document).on('click', '#btn_add', function(){ 
-                   var id = $('#id').text(); 
-                   var station = $('#station').text(); 
-                   var Gain_DNI = $('#Gain_DNI').text();  
+      <script>
+         $(document).ready(function(){
+
+              $(document).on('click', '#btn_add', function(){
+                   var id = $('#id').text();
+                   var station = $('#station').text();
+                   var Gain_DNI = $('#Gain_DNI').text();
                    var Offset_V1 = $('#Offset_V1').text();
-                   var Gain_V = $('#Gain_V').text();  
+                   var Gain_V = $('#Gain_V').text();
                    var Offset_V2 = $('#Offset_V2').text();
-          
-                    if(id == '')  
-                   {  
-                        alert("id");  
-                        return false;  
-                   } 
-                   if(station == '')  
-                   {  
-                        alert("Enter Station ");  
-                        return false;  
-                   } 
-                   if(Gain_DNI == '')  
-                   {  
-                        alert("Enter Gain_DNI ");  
-                        return false;  
-                   }  
-                   if(Offset_V1 == '')  
-                   {  
-                        alert("Enter Offset_V1");  
-                        return false;  
-                   } 
-                   if(Gain_V == '')  
-                   {  
-                        alert("Enter Gain_V ");  
-                        return false;  
-                   }  
-                   if(Offset_V2 == '')  
-                   {  
-                        alert("Enter Offset_V2");  
-                        return false;  
-                   }  
-                   
-                   $.ajax({  
-                        url:"insert.php",  
-                        method:"POST",  
-                        data:{id:id,station:station,Gain_DNI:Gain_DNI,Offset_V1:Offset_V1,Gain_V:Gain_V,Offset_V2:Offset_V2},  
-                        dataType:"text",  
-                        success:function(data)  
-                        {  
-                             alert(data);  
-                             fetch_data();  
-                        }  
-                   })  
-              });  
-         
-         
-              function edit_data(id, text, column_name)  
-              {  
-                   $.ajax({  
-                        url:"edit.php",  
-                        method:"POST",  
-                        data:{id:id, text:text, column_name:column_name},  
-                        dataType:"text",  
-                        success:function(data){  
-                               
-                        }  
-                   });  
-              }  
-              $(document).on('blur', '.station', function(){  
-                   var id = $(this).data("id1");					
-                   var station = $(this).text(); 					
-                   edit_data(id, station, "station");  
-              });  
-              $(document).on('blur', '.Gain_DNI', function(){  
-                   var id = $(this).data("id2");				
-                   var Gain_DNI = $(this).text();  
-                   edit_data(id, Gain_DNI, "Gain_DNI");  
-              });  
-              $(document).on('blur', '.Offset_V1', function(){  
-                   var id = $(this).data("id3"); 		 
-                   var Offset_V1 = $(this).text();  
-                   edit_data(id,Offset_V1, "Offset_V1");  
+
+                    if(id == '')
+                   {
+                        alert("id");
+                        return false;
+                   }
+                   if(station == '')
+                   {
+                        alert("Enter Station ");
+                        return false;
+                   }
+                   if(Gain_DNI == '')
+                   {
+                        alert("Enter Gain_DNI ");
+                        return false;
+                   }
+                   if(Offset_V1 == '')
+                   {
+                        alert("Enter Offset_V1");
+                        return false;
+                   }
+                   if(Gain_V == '')
+                   {
+                        alert("Enter Gain_V ");
+                        return false;
+                   }
+                   if(Offset_V2 == '')
+                   {
+                        alert("Enter Offset_V2");
+                        return false;
+                   }
+
+                   $.ajax({
+                        url:"insert.php",
+                        method:"POST",
+                        data:{id:id,station:station,Gain_DNI:Gain_DNI,Offset_V1:Offset_V1,Gain_V:Gain_V,Offset_V2:Offset_V2},
+                        dataType:"text",
+                        success:function(data)
+                        {
+                             alert(data);
+                             fetch_data();
+                        }
+                   })
               });
-              $(document).on('blur', '.Gain_V', function(){  
-                   var id = $(this).data("id4");					 
-                   var Gain_V = $(this).text();  
-                   edit_data(id, Gain_V, "Gain_V");  
-              });  
-              $(document).on('blur', '.Offset_V2', function(){  
-                   var id = $(this).data("id5"); 					
-                   var Offset_V2 = $(this).text();  
-                   edit_data(id,Offset_V2, "Offset_V2");  
-              }); 
-         
-              $(document).on('click', '.btn_delete', function(){  
-                   var id=$(this).data("id6"); 
-         
-                   if(confirm("Are you sure you want to delete this?"))  
-                   {  
-                        $.ajax({  
-                             url:"delete.php",  
-                             method:"POST",  
-                             data:{id:id},  
-                             dataType:"text",  
-                             success:function(data){  
-                                  alert(data);  
-                                  fetch_data();  
-                             }  
-                        });  
-                   }  
-              });  
-         });  
+
+
+              function edit_data(id, text, column_name)
+              {
+                   $.ajax({
+                        url:"edit.php",
+                        method:"POST",
+                        data:{id:id, text:text, column_name:column_name},
+                        dataType:"text",
+                        success:function(data){
+
+                        }
+                   });
+              }
+              $(document).on('blur', '.station', function(){
+                   var id = $(this).data("id1");
+                   var station = $(this).text();
+                   edit_data(id, station, "station");
+              });
+              $(document).on('blur', '.Gain_DNI', function(){
+                   var id = $(this).data("id2");
+                   var Gain_DNI = $(this).text();
+                   edit_data(id, Gain_DNI, "Gain_DNI");
+              });
+              $(document).on('blur', '.Offset_V1', function(){
+                   var id = $(this).data("id3"); 		
+                   var Offset_V1 = $(this).text();
+                   edit_data(id,Offset_V1, "Offset_V1");
+              });
+              $(document).on('blur', '.Gain_V', function(){
+                   var id = $(this).data("id4");					
+                   var Gain_V = $(this).text();
+                   edit_data(id, Gain_V, "Gain_V");
+              });
+              $(document).on('blur', '.Offset_V2', function(){
+                   var id = $(this).data("id5");
+                   var Offset_V2 = $(this).text();
+                   edit_data(id,Offset_V2, "Offset_V2");
+              });
+
+              $(document).on('click', '.btn_delete', function(){
+                   var id=$(this).data("id6");
+
+                   if(confirm("Are you sure you want to delete this?"))
+                   {
+                        $.ajax({
+                             url:"delete.php",
+                             method:"POST",
+                             data:{id:id},
+                             dataType:"text",
+                             success:function(data){
+                                  alert(data);
+                                  fetch_data();
+                             }
+                        });
+                   }
+              });
+         });
       </script>
    </head>
    <body class="hold-transition skin-blue sidebar-mini" oncontextmenu="return true">
@@ -206,7 +206,7 @@
                               <img src="../../dist/img/logo.jpg" class="img-circle" alt="User Image">
                               <p>
                                  <!--<?php echo $login_user;?>-->SGS Weather
-                                 
+
                               </p>
                            </li>
                            <!-- Menu Body -->
@@ -236,30 +236,30 @@
                      <p>
                         <!--<?php echo $login_user;?>-->SGS Weather
                      </p>
-                    
+
                   </div>
                </div>
                <ul class="sidebar-menu">
                   <li class="treeview">
                      <a href="../../index.php">
                      <i class="fa fa-dashboard"></i>
-                     <span>Dashboard</span>            
-                     </a>      
+                     <span>Dashboard</span>
+                     </a>
                      <ul class="treeview-menu">
-                        <li><a href="../data_visualization/irradiance_time.php"><i class="fa fa-line-chart"></i>View Irradiance-Time Plot</a></li>                        
+                        <li><a href="../data_visualization/irradiance_time.php"><i class="fa fa-line-chart"></i>View Irradiance-Time Plot</a></li>
                      </ul>
                   </li>
                   <li>
                      <a href="../data_access/">
-                     <i class="fa fa-download"></i> <span>Data Access</span>            
+                     <i class="fa fa-download"></i> <span>Data Access</span>
                      </a>
                   </li>
                   <li>
                      <a href="#">
-                     <i class="fa fa-file-text-o"></i> <span>Data Config</span>            
+                     <i class="fa fa-file-text-o"></i> <span>Data Config</span>
                      </a>
                   </li>
-                  
+
                   <li><a href="../about/about.php"><i class="fa fa-info-circle"></i> <span>About</span></a></li>
                </ul>
             </section>
@@ -271,13 +271,13 @@
             <!-- Main content -->
             <section class="content">
                <div class="row">
-                  <div class="col-md-12">				  
-				  <div class="col-md-2">                     
+                  <div class="col-md-12">				
+				  <div class="col-md-2">
                         <span style="margin:0 auto;width:50%:">
                            <?php
 						   include ('../../config/config.php');
                               $query = "SELECT [NumEstacion],[Nombre] FROM [MeteoStation4K].[dbo].[Estaciones] ;";
-                                $result = sqlsrv_query($pg_index, $query);             
+                                $result = sqlsrv_query($pg_index, $query);
                               ?>
                                 <label>Station:
                                     <select name="station" onChange="fetch_data(this);">
@@ -287,17 +287,17 @@
                                         <?php }  sqlsrv_close($pg_index);?>
                                     </select>
                                 </label>
-                        </span>             
-                  </div>	
+                        </span>
+                  </div>
 					<script>
 					function fetch_data(sel) {
-                         var station = sel.options[sel.selectedIndex].value;                   
-                         if (station.length > 0) {                     
+                         var station = sel.options[sel.selectedIndex].value;
+                         if (station.length > 0) {
                              $.ajax({
                                  type: "POST",
                                  url: "select.php",
                                  data: "station=" + station,
-                                 cache: false,                                 
+                                 cache: false,
                                  success: function(html) {
                                      $("#live_data").html(html);
                                  }
@@ -305,8 +305,8 @@
                          }
                      }
 					 fetch_data();
-					 </script>					
-                     <div class="table-responsive">                         
+					 </script>
+                     <div class="table-responsive">
                            <div id="live_data"></div>
                      </div>
                   </div>
@@ -315,7 +315,7 @@
                         <form name="form" method="post" enctype="multipart/form-data" action="upload.php">
                            <table>
                               <tr>
-                                 <th>Upload CCF CSV File Here    
+                                 <th>Upload CCF CSV File Here
                                  <td>
                                     <select name="number" onchange="this.form.submit();" method="post">
                                        <option value="">  Select Station</option>
@@ -324,8 +324,8 @@
                                        <option value="2548">AMS_SEC</option>
                                        <option value="2550">AMS_HWH</option>
                                     </select>
-                                 </td>    
-								 </th>                             
+                                 </td>
+								 </th>
                                  <td><input type="file" value="Upload CSV Format" name="csvfile" />
 								 </td>
 								 <td>

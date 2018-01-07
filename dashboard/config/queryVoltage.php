@@ -1,6 +1,6 @@
 <?php
 
-// 
+//
 
 $maindatabaseName = "MeteoStation4K";
 
@@ -24,7 +24,7 @@ $end_date = "2018-01-07 " . $end_time;
 
 $station = 2548;
 
-// 
+//
 
 $subquery_prefix = "(SELECT " . $es_value . ", " . $es_stationNumber . ", " . $es_time . " FROM [" . $maindatabaseName . "].[dbo].[" . $es_data . "] WHERE " . $es_stationNumber . " = " . (string)$station . " AND " . $es_functionNumber . " = 0 AND " . $es_parameterNumber . " = ";
 $subquery_suffix = " AND " . $es_time . " BETWEEN '" . $start_date . "' AND '" . $end_date . "')";
