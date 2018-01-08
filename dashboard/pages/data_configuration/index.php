@@ -315,7 +315,7 @@
 									<form name="form" method="post" enctype="multipart/form-data" action="upload.php">
 										<table>
 											<tr>
-												<th>Upload CCF CSV File Here
+												<th>Upload configuration file here
 													<td>
 														<select name="number" onchange="this.form.submit();" method="post">
 															<option value="">  Select Station</option>
