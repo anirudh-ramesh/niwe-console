@@ -4,48 +4,37 @@ session_start();
 
 $station = $_SESSION['station'];
 
-include('../../config/config.php');
+include('../../config/init.php');
 
 if (isset($_SESSION['station'], $_POST["view_irr_from_date"], $_POST["view_irr_to_date"])) {
 
 	$start_date = $_POST["view_irr_from_date"] . " 00:00:00";
 	$end_date   = $_POST["view_irr_to_date"] . " 23:59:00";
 
-	$query = "Select
-		value1.NumEstacion as station,
-		value1.Fecha as timestmp,
-		value1.Valor as variable1,
-		value2.Valor as variable2,
-		value3.Valor as variable3,
-		value4.Valor as variable4,
-		value5.Valor as variable5,
-		value6.Valor as variable6,
-		value7.Valor as variable7,
-		value8.Valor as variable8,
-		value9.Valor as variable9,
-		value10.Valor as variable10
-		from
-		(select Valor,NumEstacion,Fecha from $database_name.[dbo].[Datos] where NumEstacion='$station' and NumParametro = 16 and NumFuncion=0 and Fecha BETWEEN '$start_date' AND '$end_date') as value1
-			inner join
-		(select Valor,NumEstacion,Fecha from $database_name.[dbo].[Datos] where NumEstacion='$station' and NumParametro = 17 and NumFuncion=0 and Fecha BETWEEN '$start_date' AND '$end_date') as value2 on value1.Fecha=value2.Fecha and value1.NumEstacion=value2.NumEstacion
-			inner join
-		(select Valor,NumEstacion,Fecha from $database_name.[dbo].[Datos] where NumEstacion='$station' and NumParametro = 18 and NumFuncion=0 and Fecha BETWEEN '$start_date' AND '$end_date') as value3 on value2.Fecha=value3.Fecha and value3.NumEstacion=value2.NumEstacion
-			inner join
-		(select Valor,NumEstacion,Fecha from $database_name.[dbo].[Datos] where NumEstacion='$station' and NumParametro = 19 and NumFuncion=0 and Fecha BETWEEN '$start_date' AND '$end_date') as value4 on value3.Fecha=value4.Fecha and value4.NumEstacion=value3.NumEstacion
-			inner join
-		(select Valor,NumEstacion,Fecha from $database_name.[dbo].[Datos] where NumEstacion='$station' and NumParametro = 20 and NumFuncion=0 and Fecha BETWEEN '$start_date' AND '$end_date') as value5 on value4.Fecha=value5.Fecha and value5.NumEstacion=value4.NumEstacion
-			inner join
-		(select Valor,NumEstacion,Fecha from $database_name.[dbo].[Datos] where NumEstacion='$station' and NumParametro = 21 and NumFuncion=0 and Fecha BETWEEN '$start_date' AND '$end_date') as value6 on value5.Fecha=value6.Fecha and value6.NumEstacion=value5.NumEstacion
-			inner join
-		(select Valor,NumEstacion,Fecha from $database_name.[dbo].[Datos] where NumEstacion='$station' and NumParametro = 22 and NumFuncion=0 and Fecha BETWEEN '$start_date' AND '$end_date') as value7 on value6.Fecha=value7.Fecha and value7.NumEstacion=value6.NumEstacion
-			inner join
-		(select Valor,NumEstacion,Fecha from $database_name.[dbo].[Datos] where NumEstacion='$station' and NumParametro = 23 and NumFuncion=0 and Fecha BETWEEN '$start_date' AND '$end_date') as value8 on value7.Fecha=value8.Fecha and value8.NumEstacion=value7.NumEstacion
-			inner join
-		(select Valor,NumEstacion,Fecha from $database_name.[dbo].[Datos] where NumEstacion='$station' and NumParametro = 24 and NumFuncion=0 and Fecha BETWEEN '$start_date' AND '$end_date') as value9 on value8.Fecha=value9.Fecha and value9.NumEstacion=value8.NumEstacion
-			inner join
-		(select Valor,NumEstacion,Fecha from $database_name.[dbo].[Datos] where NumEstacion='$station' and NumParametro = 25 and NumFuncion=0 and Fecha BETWEEN '$start_date' AND '$end_date') as value10 on value9.Fecha=value10.Fecha and value10.NumEstacion=value9.NumEstacion;";
+	$subquery_prefix = "(SELECT " . $es_value . ", " . $es_stationNumber . ", " . $es_time . " FROM [" . $maindatabaseName . "].[dbo].[" . $es_data . "] WHERE " . $es_stationNumber . " = " . (string)$station . " AND " . $es_functionNumber . " = 0 AND " . $es_parameterNumber . " = ";
+	$subquery_suffix = " AND " . $es_time . " BETWEEN '" . $start_date . "' AND '" . $end_date . "')";
 
-	$result = sqlsrv_query($pg_index, $query, array(), array("Scrollable" => "buffered"));
+	$query_prefix = "SELECT ";
+	for ($index = 1; $index <= $nChannels; $index++) {
+		$query_prefix = $query_prefix . "value" . (string)$index . "." . $es_value . " AS variable" . (string)$index . ", ";
+	}
+	$query_prefix = $query_prefix . "value1." . $es_stationNumber . " AS station, ";
+	$query_prefix = $query_prefix . "value1." . $es_time . " AS timestmp ";
+	$query_prefix = $query_prefix . "from ";
+
+	$query = $query_prefix . "\n" . $subquery_prefix . (string)$iChannels . $subquery_suffix . " AS value1 inner join \n";
+	for ($channel = $iChannels + 1; $channel <= $iChannels + $nChannels - 1; $channel++) {
+		$value = $channel - $iChannels + 1;
+		$query = $query . $subquery_prefix . (string)$channel . $subquery_suffix . " AS value" . (string)$value . " ON value" . (string)($value - 1) . "." . $es_time . " = value" . (string)$value . "." . $es_time . " AND value" . (string)($value - 1) . "." . $es_stationNumber . " = value" . (string)$value . "." . $es_stationNumber;
+		if ($channel != $iChannels + $nChannels - 1) {
+			$query = $query . " inner join \n";
+		}
+		else {
+			$query = $query . "\n GROUP BY (DATEPART(MINUTE, value1." . $es_time . ") / " . (string)$granularity . ")";
+		}
+	}
+
+	$result = sqlsrv_query($maindatabaseHandle, $query, array(), array("Scrollable" => "buffered"));
 	if (sqlsrv_num_rows($result) > 0) {
 		echo "<table class='table table-bordered'>";
 		echo "<tr>";
@@ -66,7 +55,7 @@ if (isset($_SESSION['station'], $_POST["view_irr_from_date"], $_POST["view_irr_t
 			
 			for ($i = 1; $i <= 10; $i++) {
 				$query2 = "SELECT * FROM [Soreva].[dbo].[conversion_constant] where id=$i AND station=$station;";
-				$result2 = sqlsrv_query($pg_index1, $query2, array() , array("Scrollable" => "buffered"));
+				$result2 = sqlsrv_query($sidedatabaseHandle, $query2, array() , array("Scrollable" => "buffered"));
 				while ($row1 = sqlsrv_fetch_array($result2, SQLSRV_FETCH_ASSOC)) {
 					$y[$i] = ($row["variable" . "$i"] - $row1['Offset_V1'] * $row1['Gain_V'] - $row1['Offset_V2']) / ($row1['Gain_V'] * $row1['Gain_DNI']);
 				}

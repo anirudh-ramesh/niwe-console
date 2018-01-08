@@ -1,13 +1,13 @@
 <?php
 
-include ('../../config/config.php');
+include ('../../config/init.php');
 
 $query = "DELETE FROM conversion_constant WHERE id = '".$_POST["id"]."'";
 
-if (sqlsrv_query($pg_index1, $query)) {
+if (sqlsrv_query($sidedatabaseHandle, $query)) {
 	echo 'Data Deleted';
 }
 
-sqlsrv_close($pg_index1);
+sqlsrv_close($sidedatabaseHandle);
 
 ?>

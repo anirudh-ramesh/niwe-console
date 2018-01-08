@@ -2,7 +2,7 @@
 
 session_start();
 
-include ('../../config/config.php');
+include ('../../config/init.php');
 
 $station = ($_REQUEST["station"] <> "") ? trim($_REQUEST["station"]) : "";
 
@@ -10,7 +10,7 @@ if ($station <> "") {
 	$_SESSION['station'] = $_REQUEST["station"];
 	$output = '';
 	$query = "SELECT * FROM [Soreva].[dbo].[conversion_constant] where station = $station;";
-	$result  = sqlsrv_query( $pg_index1,$query, array(), array("Scrollable"=>"buffered"));
+	$result  = sqlsrv_query( $sidedatabaseHandle,$query, array(), array("Scrollable"=>"buffered"));
 	$output .= '<div class="table-responsive">
 					<table class="table table-bordered">
 						<tr>
@@ -58,6 +58,6 @@ if ($station <> "") {
 	echo $output;
 }
 
-sqlsrv_close($pg_index1);
+sqlsrv_close($sidedatabaseHandle);
 
 ?>

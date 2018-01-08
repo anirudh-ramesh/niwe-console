@@ -143,16 +143,16 @@
 											session_start();
 											$station = ($_REQUEST["station"] <> "") ? trim($_REQUEST["station"]) : "";
 											$_SESSION['station'] = $_REQUEST["station"];
-											include('../../config/config.php');
-											$query = "SELECT [NumEstacion],[Nombre] FROM [MeteoStation4K].[dbo].[Estaciones] ;";
-											$result = sqlsrv_query($pg_index, $query);
+											include('../../config/init.php');
+											$query = "SELECT [" . $es_stationNumber . "],[" . $es_number . "] FROM [" . $maindatabaseName . "].[dbo].[" . $es_stations . "] ;";
+											$result = sqlsrv_query($maindatabaseHandle, $query);
 										?>
 										<label>Station &nbsp</label>
 										<select name="station" onChange="selectStation(this);">
 											<option value="">Select</option>
 											<?php while ($row = sqlsrv_fetch_array($result)){ ?>
-											<option value="<?php echo $row["NumEstacion"]; ?>"><?php echo $row["Nombre"]; ?></option>
-											<?php }  sqlsrv_close($pg_index);?>
+											<option value="<?php echo $row[$es_stationNumber]; ?>"><?php echo $row[$es_number]; ?></option>
+											<?php }  sqlsrv_close($maindatabaseHandle);?>
 										</select>
 									</div>
 								</div>

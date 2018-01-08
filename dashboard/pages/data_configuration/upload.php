@@ -1,6 +1,6 @@
 <?php
 
-include ('../../config/config.php');
+include ('../../config/init.php');
 
 error_reporting(1);
 
@@ -32,10 +32,10 @@ if (isset($_POST['submit'])) {
 
 				while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
 					$query = "INSERT INTO conversion_constant(station,id,wavelength,Gain_DNI,Offset_V1,Gain_V,Offset_V2) VALUES($station,'$data[0]','$data[1]','$data[2]','$data[3]','$data[4]','$data[5]')";
-					$result  = sqlsrv_query($pg_index1, $query);
+					$result  = sqlsrv_query($sidedatabaseHandle, $query);
 				}
 
-				sqlsrv_close($pg_index1);
+				sqlsrv_close($sidedatabaseHandle);
 				fclose($handle);
 				echo "Import done";
 				header("Location: index.php");

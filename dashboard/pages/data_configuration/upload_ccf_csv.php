@@ -37,7 +37,7 @@
   </body></html>
 <?php
 
-include ('../../config/config.php');
+include ('../../config/init.php');
 error_reporting(1);
 
 $csvfile = $_FILES['csvfile']['name'];
@@ -79,9 +79,9 @@ if (isset($_POST['submit'])) {
 									$query = "INSERT INTO conversion_constant(id,station,variable1,variable2,variable3,variable4)
 									VALUES(DEFAULT,$station,'$data[0]','$data[1]','$data[2]','$data[3]')";
 
-									$result  = pg_query($pg_index, $query);
+									$result  = pg_query($maindatabaseHandle, $query);
 										}
-							pg_close($pg_index);
+							pg_close($maindatabaseHandle);
 
 							fclose($handle);
 							echo "Import done";
