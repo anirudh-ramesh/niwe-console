@@ -47,18 +47,18 @@ if (isset($_SESSION['station'], $_GET["view_chart_from_date"], $_GET["view_chart
 	$arr[9]['name']  = 'DNI_938.1nm';
 	$arr[10]['name'] = 'DNI_1037.8nm';
 
-	$result = sqlsrv_query( $maindatabaseHandle,$query, array(), array("Scrollable"=>"buffered"));
-	while ($row = sqlsrv_fetch_array($result,SQLSRV_FETCH_ASSOC)) {
+	$result = sqlsrv_query ($maindatabaseHandle,$query, array(), array("Scrollable"=>"buffered"));
+	while ($row = sqlsrv_fetch_array ($result, SQLSRV_FETCH_ASSOC)) {
 
-		$arr0['data'][] = date_format($row['timestmp'],"Y-m-d  H:i");
+		$arr0['data'][] = date_format ($row['timestmp'],"Y-m-d  H:i");
 
 		for ($i = 1; $i <= 10; $i++) {
 
 			$query2 = "SELECT * FROM [Soreva].[dbo].[conversion_constant] where id=$i AND station=$station;";
 
-			$result2 = sqlsrv_query( $sidedatabaseHandle,$query2, array(), array("Scrollable"=>"buffered"));
+			$result2 = sqlsrv_query ($sidedatabaseHandle,$query2, array(), array("Scrollable"=>"buffered"));
 
-			while ($row1 = sqlsrv_fetch_array($result2,SQLSRV_FETCH_ASSOC)) {
+			while ($row1 = sqlsrv_fetch_array ($result2, SQLSRV_FETCH_ASSOC)) {
 				$arr[$i]['data'][] = ($row["variable"."$i"] - $row1['Offset_V1'] * $row1['Gain_V'] - $row1['Offset_V2']) / ($row1['Gain_V'] * $row1['Gain_DNI']);
 			}
 
