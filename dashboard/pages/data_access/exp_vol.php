@@ -54,12 +54,12 @@ if (isset($_SESSION['station'], $_POST["exp_vol_from_date"], $_POST["exp_vol_to_
 		'Voltage_869.2nm',
 		'Voltage_938.1nm',
 		'Voltage_1037.8nm'
-		);
+	);
 	fputcsv($f, $fields, $delimiter);
 	$result = sqlsrv_query($maindatabaseHandle, $query, array() , array("Scrollable" => "buffered"));
 	while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
 		$lineData = array(
-		date_format($row['timestmp'], "Y-m-d H:i"),
+			date_format($row['timestmp'], "Y-m-d H:i"),
 			number_format((float)$row['variable1'], 3, '.', ''),
 			number_format((float)$row['variable2'], 3, '.', ''),
 			number_format((float)$row['variable3'], 3, '.', ''),
@@ -70,7 +70,7 @@ if (isset($_SESSION['station'], $_POST["exp_vol_from_date"], $_POST["exp_vol_to_
 			number_format((float)$row['variable8'], 3, '.', ''),
 			number_format((float)$row['variable9'], 3, '.', ''),
 			number_format((float)$row['variable10'], 3, '.', '')
-			);
+		);
 		fputcsv($f, $lineData, $delimiter);
 	}
 	// Move to the beginning of the file

@@ -54,7 +54,7 @@ if (isset($_SESSION['station'], $_POST["exp_irr_from_date"], $_POST["exp_irr_to_
 		'DNI_869.2nm',
 		'DNI_938.1nm',
 		'DNI_1037.8nm'
-		);
+	);
 	fputcsv($f, $fields, $delimiter);
 	$result = sqlsrv_query($maindatabaseHandle, $query, array() , array("Scrollable" => "buffered"));
 	while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
@@ -68,18 +68,18 @@ if (isset($_SESSION['station'], $_POST["exp_irr_from_date"], $_POST["exp_irr_to_
 			}
 		}
 		$lineData = array(
-				date_format($y[0], "Y-m-d H:i") ,
-				number_format((float)$y[1], 3, '.', '') ,
-				number_format((float)$y[2], 3, '.', '') ,
-				number_format((float)$y[3], 3, '.', '') ,
-				number_format((float)$y[4], 3, '.', '') ,
-				number_format((float)$y[5], 3, '.', '') ,
-				number_format((float)$y[6], 3, '.', '') ,
-				number_format((float)$y[7], 3, '.', '') ,
-				number_format((float)$y[8], 3, '.', '') ,
-				number_format((float)$y[9], 3, '.', '') ,
-				number_format((float)$y[10], 3, '.', '')
-				);
+			date_format($y[0], "Y-m-d H:i") ,
+			number_format((float)$y[1], 3, '.', '') ,
+			number_format((float)$y[2], 3, '.', '') ,
+			number_format((float)$y[3], 3, '.', '') ,
+			number_format((float)$y[4], 3, '.', '') ,
+			number_format((float)$y[5], 3, '.', '') ,
+			number_format((float)$y[6], 3, '.', '') ,
+			number_format((float)$y[7], 3, '.', '') ,
+			number_format((float)$y[8], 3, '.', '') ,
+			number_format((float)$y[9], 3, '.', '') ,
+			number_format((float)$y[10], 3, '.', '')
+		);
 		fputcsv($f, $lineData, $delimiter);
 	}
 	// Move to the beginning of the file

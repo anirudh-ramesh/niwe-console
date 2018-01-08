@@ -65,19 +65,19 @@ if (isset($_SESSION['station'], $_GET["view_chart_from_date"], $_GET["view_chart
 		}
 	}
 
-	$rslt = array();
-	array_push($rslt, $arr0);
-	array_push($rslt, $arr[1]);
-	array_push($rslt, $arr[2]);
-	array_push($rslt, $arr[3]);
-	array_push($rslt, $arr[4]);
-	array_push($rslt, $arr[5]);
-	array_push($rslt, $arr[6]);
-	array_push($rslt, $arr[7]);
-	array_push($rslt, $arr[8]);
-	array_push($rslt, $arr[9]);
-	array_push($rslt, $arr[10]);
-	print json_encode($rslt, JSON_NUMERIC_CHECK);
+	$payload = array();
+	array_push($payload, $arr0);
+	array_push($payload, $arr[1]);
+	array_push($payload, $arr[2]);
+	array_push($payload, $arr[3]);
+	array_push($payload, $arr[4]);
+	array_push($payload, $arr[5]);
+	array_push($payload, $arr[6]);
+	array_push($payload, $arr[7]);
+	array_push($payload, $arr[8]);
+	array_push($payload, $arr[9]);
+	array_push($payload, $arr[10]);
+	print json_encode($payload, JSON_NUMERIC_CHECK);
 
 	sqlsrv_close($maindatabaseHandle);
 
