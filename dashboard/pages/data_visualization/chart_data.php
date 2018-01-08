@@ -34,7 +34,6 @@ if (isset($_SESSION['station'], $_GET["view_chart_from_date"], $_GET["view_chart
 		}
 	}
 
-	$bln             = array();
 	$arr0['name']    = 'Timestamp';
 	$arr[1]['name']  = 'DNI_299.1nm';
 	$arr[2]['name']  = 'DNI_324.4nm';
