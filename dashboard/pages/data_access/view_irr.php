@@ -30,7 +30,7 @@ if (isset($_SESSION['station'], $_POST["view_irr_from_date"], $_POST["view_irr_t
 			$query = $query . " inner join \n";
 		}
 		else {
-			$query = $query . "\n GROUP BY (DATEPART(MINUTE, value1." . $es_time . ") / " . (string)$granularity . ")";
+			$query = "\n";
 		}
 	}
 

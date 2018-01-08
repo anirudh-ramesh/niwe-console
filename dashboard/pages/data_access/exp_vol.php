@@ -36,7 +36,7 @@ if (isset($_SESSION['station'], $_POST["exp_vol_from_date"], $_POST["exp_vol_to_
 			$query = $query . " inner join \n";
 		}
 		else {
-			$query = $query . "\n GROUP BY (DATEPART(MINUTE, value1." . $es_time . ") / " . (string)$granularity . ")";
+			$query = "\n";
 		}
 	}
 
