@@ -94,31 +94,35 @@
 					<ul class="sidebar-menu">
 						<li class="treeview">
 							<a href="../../index.php">
-							<i class="fa fa-dashboard"></i>
-							<span>Dashboard</span>
+								<i class="fa fa-dashboard"></i>
+								<span>Dashboard</span>
 							</a>
 							<ul class="treeview-menu">
-								<li><a href="../data_visualization/irradiance_time.php"><i class="fa fa-line-chart"></i>View Irradiance-Time Plot</a></li>
+								<li>
+									<a href="../data_visualization/irradiance_time.php">
+										<i class="fa fa-line-chart"></i>View Irradiance-Time Plot
+									</a>
+								</li>
 							</ul>
 						</li>
 						<li>
 							<a href="../data_access/">
-							<i class="fa fa-download"></i>
-						<span>Data Access</span>
+								<i class="fa fa-download"></i>
+								<span>Data Access</span>
 							</a>
 						</li>
 						<li>
 							<a href="index.php">
 								<i class="fa fa-file-text-o"></i>
-						<span>Data Config</span>
+								<span>Data Config</span>
 							</a>
 						</li>
 						<li>
-					 <a href="../about/about.php">
-						<i class="fa fa-info-circle"></i>
-						<span>About</span>
-					 </a>
-				  </li>
+							<a href="../about/about.php">
+								<i class="fa fa-info-circle"></i>
+								<span>About</span>
+							</a>
+						</li>
 					</ul>
 				</section>
 			</aside>
