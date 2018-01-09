@@ -109,6 +109,13 @@
 									</a>
 								</li>
 							</ul>
+							<ul class="active treeview-menu">
+								<li>
+									<a href="irradiance_wavelength.php">
+										<i class="fa fa-line-chart"></i>View Irradiance-λ Plot
+									</a>
+								</li>
+							</ul>
 						</li>
 						<li>
 							<a href="../data_access/">
