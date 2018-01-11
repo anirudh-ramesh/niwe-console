@@ -177,12 +177,12 @@
 												<option value="">Periodicity</option>
 												<option value="1">1 Minute</option>
 												<option value="2">2 Minutes</option>
-												<option value="3">5 Minutes</option>
-												<option value="4">10 Minutes</option>
-												<option value="5">15 Minutes</option>
-												<option value="6">20 Minutes</option>
-												<option value="7">30 Minutes</option>
-												<option value="8">60 Minutes</option>
+												<option value="5">5 Minutes</option>
+												<option value="10">10 Minutes</option>
+												<option value="15">15 Minutes</option>
+												<option value="20">20 Minutes</option>
+												<option value="30">30 Minutes</option>
+												<option value="60">60 Minutes</option>
 											</select>
 										</div>
 										<div class="col-md-3">
