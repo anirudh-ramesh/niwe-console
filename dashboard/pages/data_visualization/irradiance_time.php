@@ -196,7 +196,7 @@
 							<div class="col-md-12">
 								<div class="box">
 									<div class="box-header with-border">
-										<center><h3 class="box-title">Solar Plot</h3></center>
+										<center><h3 class="box-title">Irradiance-Time Plot</h3></center>
 										<div class="box-tools pull-right">
 											<button type="button" class="btn btn-box-tool" data-widget="collapse">
 												<i class="fa fa-minus"></i>
