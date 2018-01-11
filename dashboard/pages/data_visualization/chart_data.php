@@ -6,10 +6,13 @@ $station = $_SESSION['station'];
 
 include('../../config/init.php');
 
-if (isset($_SESSION['station'], $_GET["view_chart_from_date"], $_GET["view_chart_to_date"])) {
+$granularity = ($_GET["granularity"] <> "") ? $_GET["granularity"] : "1";
+$method = ($_GET["method"] <> "") ? $_GET["method"] : "time";
 
-	$start_date = $_GET["view_chart_from_date"] . " 00:00:00";
-	$end_date   = $_GET["view_chart_to_date"] . " 23:59:00";
+if (isset($_SESSION['station'], $_GET["dateFrom"], $_GET["dateTo"])) {
+
+	$start_date = $_GET["dateFrom"] . " 00:00:00";
+	$end_date   = $_GET["dateTo"] . " 23:59:00";
 
 	$subquery_prefix = "(SELECT " . $es_value . ", " . $es_stationNumber . ", " . $es_time . " FROM [" . $maindatabaseName . "].[dbo].[" . $es_data . "] WHERE " . $es_stationNumber . " = " . (string)$station . " AND " . $es_functionNumber . " = 0 AND " . $es_parameterNumber . " = ";
 	$subquery_suffix = " AND " . $es_time . " BETWEEN '" . $start_date . "' AND '" . $end_date . "')";
