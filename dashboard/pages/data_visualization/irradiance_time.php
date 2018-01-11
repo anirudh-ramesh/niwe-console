@@ -186,7 +186,7 @@
 											</select>
 										</div>
 										<div class="col-md-3">
-											<input type="button" name="View_Chart" id="View_Chart" value="View Irradiance-λ" class="btn btn-info" />
+											<input type="button" name="View_Chart" id="View_Chart" value="View Irradiance-Time" class="btn btn-info" />
 										</div>
 										<div style="clear:both"></div>
 										<br>
