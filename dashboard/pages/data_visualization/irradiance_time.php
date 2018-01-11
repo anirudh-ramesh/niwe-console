@@ -167,13 +167,13 @@
 								<div align="center" class="row">
 									<div class="col-md-12">
 										<div class="col-md-3">
-											<input type="text" name="view_chart_from_date" id="view_chart_from_date" class="form-control" placeholder="From Date" />
+											<input type="text" name="dateFrom" id="view_chart_from_date" class="form-control" placeholder="From Date" />
 										</div>
 										<div class="col-md-3">
-											<input type="text" name="view_chart_to_date" id="view_chart_to_date" class="form-control" placeholder="To Date" />
+											<input type="text" name="dateTo" id="view_chart_to_date" class="form-control" placeholder="To Date" />
 										</div>
 										<div class="col-md-3">
-											<input type="button" name="View_Chart" id="View_Chart" value="View Irradiance" class="btn btn-info" />
+											<input type="button" name="View_Chart" id="View_Chart" value="View Irradiance-Time" class="btn btn-info" />
 										</div>
 										<div style="clear:both"></div>
 										<br>
@@ -310,18 +310,18 @@
 				$("#view_chart_to_date").datepicker();
 			});
 			$('#View_Chart').click(function() {
-				var view_chart_from_date = $('#view_chart_from_date').val();
-				var view_chart_to_date = $('#view_chart_to_date').val();
-				if(view_chart_from_date != '' && view_chart_to_date != '') {
-					getAjaxData(view_chart_from_date, view_chart_to_date);
+				var dateFrom = $('#view_chart_from_date').val();
+				var dateTo = $('#view_chart_to_date').val();
+				if(dateFrom != '' && dateTo != '') {
+					getAjaxData(dateFrom, dateTo);
 				} else {
 					alert("Select Date");
 				}
 			});
 		});
-		function getAjaxData(view_chart_from_date, view_chart_to_date ) {
+		function getAjaxData(dateFrom, dateTo) {
 			//use getJSON to get the dynamic data via AJAX call
-			$.getJSON('chart_data.php', {view_chart_from_date: view_chart_from_date,view_chart_to_date:view_chart_to_date}, function(json) {
+			$.getJSON('chart_data.php', {dateFrom: dateFrom, dateTo: dateTo}, function(json) {
 				options.xAxis.categories = json[0]['data']; //xAxis: {categories: []}
 				options.series[0] = json[1];
 				options.series[1] = json[2];
