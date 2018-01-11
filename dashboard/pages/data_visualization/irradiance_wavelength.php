@@ -167,10 +167,10 @@
 								<div align="center" class="row">
 									<div class="col-md-12">
 										<div class="col-md-3">
-											<input type="text" name="dateFrom" id="view_chart_from_date" class="form-control" placeholder="From Date" />
+											<input type="text" name="dateFrom" id="viewChart_dateFrom" class="form-control" placeholder="From Date" />
 										</div>
 										<div class="col-md-3">
-											<input type="text" name="dateTo" id="view_chart_to_date" class="form-control" placeholder="To Date" />
+											<input type="text" name="dateTo" id="viewChart_dateTo" class="form-control" placeholder="To Date" />
 										</div>
 										<div class="col-md-3">
 											<select id="granularity" name="granularity">
@@ -319,12 +319,12 @@
 				dateFormat: 'yy-mm-dd'
 			});
 			$(function() {
-				$("#view_chart_from_date").datepicker();
-				$("#view_chart_to_date").datepicker();
+				$("#viewChart_dateFrom").datepicker();
+				$("#viewChart_dateTo").datepicker();
 			});
 			$('#View_Chart').click(function() {
-				var dateFrom = $('#view_chart_from_date').val();
-				var dateTo = $('#view_chart_to_date').val();
+				var dateFrom = $('#viewChart_dateFrom').val();
+				var dateTo = $('#viewChart_dateTo').val();
 				var granularity = $('#granularity').val().toString();
 				if(dateFrom != '' && dateTo != '') {
 					getAjaxData(dateFrom, dateTo, granularity);
