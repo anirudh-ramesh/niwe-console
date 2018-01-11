@@ -310,7 +310,7 @@
 				valueDecimals: 2
 			},
 			exporting: {
-				filename: 'Irradiance_vs_Time'
+				filename: 'Irradiance-Time'
 			},
 			series: []
 		};
