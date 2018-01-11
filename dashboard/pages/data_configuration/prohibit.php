@@ -115,7 +115,7 @@
 							</a>
 						</li>
 						<li>
-							<a href="index.php">
+							<a href="#">
 								<i class="fa fa-file-text-o"></i>
 								<span>Data Config</span>
 							</a>

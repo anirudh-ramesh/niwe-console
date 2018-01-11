@@ -115,13 +115,13 @@
 							</a>
 						</li>
 						<li>
-							<a href="index.php">
+							<a href="../data_configuration/">
 								<i class="fa fa-file-text-o"></i>
 								<span>Data Config</span>
 							</a>
 						</li>
 						<li>
-							<a href="../about/about.php">
+							<a href="#">
 								<i class="fa fa-info-circle"></i>
 								<span>About</span>
 							</a>
