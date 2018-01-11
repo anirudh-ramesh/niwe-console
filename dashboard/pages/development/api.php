@@ -21,42 +21,78 @@ while ($row = sqlsrv_fetch_array($result)) {
 	$stationName = $row[$es_number];
 }
 
-// If the 'from_date', 'to_date', 'granularity' or 'method' are unavailable...
-if (!$_POST['from_date'])
-{
-	// ...echo a message...
-	echo "Error: 'from_date' unavailable in this HTTP POST request's body.";
-	// ...and exit...
-	exit;
-}
-if (!$_POST['to_date'])
-{
-	// ...echo a message...
-	echo "Error: 'to_date' unavailable in this HTTP POST request's body.";
-	// ...and exit...
-	exit;
-}
-if (!$_POST['granularity'])
-{
-	// ...echo a message...
-	echo "Error: 'granularity' unavailable in this HTTP POST request's body.";
-	// ...and exit...
-	exit;
-}
-if (!$_POST['method'])
-{
-	// ...echo a message...
-	echo "Error: 'method' unavailable in this HTTP POST request's body.";
-	// ...and exit...
-	exit;
-}
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-$start_date = $_POST['from_date'] . " " . $start_time;
-$end_date = $_POST['to_date'] . " " . $end_time;
-$granularity = $_POST['granularity'];
+	// If the 'dateFrom', 'dateTo' or 'method' are unavailable...
+	if (!$_POST['dateFrom'])
+	{
+		// ...echo a message...
+		echo "Error: 'dateFrom' unavailable in this HTTP POST request's body.";
+		// ...and exit...
+		exit;
+	} else {
+		$start_date = $_POST['dateFrom'] . " " . $start_time;
+	}
+	if (!$_POST['dateTo'])
+	{
+		// ...echo a message...
+		echo "Error: 'dateTo' unavailable in this HTTP POST request's body.";
+		// ...and exit...
+		exit;
+	} else {
+		$end_date = $_POST['dateTo'] . " " . $end_time;
+	}
+	if (!$_POST['method'])
+	{
+		// ...echo a message...
+		echo "Error: 'method' unavailable in this HTTP POST request's body.";
+		// ...and exit...
+		exit;
+	} else {
+		$method = $_POST['method'];
+	}
+
+	$granularity = ($_POST["granularity"] <> "") ? $_POST["granularity"] : "1";
+
+} elseif ($_SERVER['REQUEST_METHOD'] == 'GET') {
+
+	// If the 'dateFrom', 'dateTo' or 'method' are unavailable...
+	if (!$_GET['dateFrom'])
+	{
+		// ...echo a message...
+		echo "Error: 'dateFrom' unavailable in this HTTP GET request.";
+		// ...and exit...
+		exit;
+	} else {
+		$start_date = $_GET['dateFrom'] . " " . $start_time;
+	}
+	if (!$_GET['dateTo'])
+	{
+		// ...echo a message...
+		echo "Error: 'dateTo' unavailable in this HTTP GET request.";
+		// ...and exit...
+		exit;
+	} else {
+		$end_date = $_GET['dateTo'] . " " . $end_time;
+	}
+	if (!$_GET['method'])
+	{
+		// ...echo a message...
+		echo "Error: 'method' unavailable in this HTTP GET request.";
+		// ...and exit...
+		exit;
+	} else {
+		$method = $_GET['method'];
+	}
+
+	$granularity = ($_GET["granularity"] <> "") ? $_GET["granularity"] : "1";
+
+}
 
 // echo $start_date;
 // echo $end_date;
+// echo $method;
+// echo $granularity;
 
 $subquery_prefix = "(SELECT " . $es_value . ", " . $es_stationNumber . ", " . $es_time . " FROM [" . $maindatabaseName . "].[dbo].[" . $es_data . "] WHERE " . $es_stationNumber . " = " . (string)$station . " AND " . $es_functionNumber . " = 0 AND " . $es_parameterNumber . " = ";
 $subquery_suffix = " AND " . $es_time . " BETWEEN '" . $start_date . "' AND '" . $end_date . "')";
@@ -68,7 +104,7 @@ $query_prefix = "SELECT ";
 for ($index = 1; $index <= $nChannels; $index++) {
 	$query_prefix = $query_prefix . "AVG(set" . (string)$index . "." . $es_value . ") AS voltage" . (string)$index . ", ";
 }
-// $query_prefix = $query_prefix . "set1." . $es_stationNumber . " AS station, ";
+// $query_prefix = $query_prefix . "MAX(set1." . $es_stationNumber . ") AS station, ";
 $query_prefix = $query_prefix . "MAX(set1." . $es_time . ") AS timestmp ";
 $query_prefix = $query_prefix . "from ";
 
@@ -80,15 +116,14 @@ for ($channel = $iChannels + 1; $channel <= $iChannels + $nChannels - 1; $channe
 	$query = $query . $subquery_prefix . (string)$channel . $subquery_suffix . " AS set" . (string)$set . " ON set" . (string)($set - 1) . "." . $es_time . " = set" . (string)$set . "." . $es_time . " AND set" . (string)($set - 1) . "." . $es_stationNumber . " = set" . (string)$set . "." . $es_stationNumber;
 	if ($channel != $iChannels + $nChannels - 1) {
 		$query = $query . " inner join \n";
-	}
-	else {
-		$query = $query . "\n GROUP BY (DATEPART(MINUTE, set1." . $es_time . ") / " . (string)$granularity . ")";
+	} else {
+		$query = $query . "\n GROUP BY DATEPART(YEAR, value1.Fecha), DATEPART(MONTH, value1.Fecha), DATEPART(DAY, value1.Fecha), DATEPART(HOUR, value1.Fecha), (DATEPART(MINUTE, set1." . $es_time . ") / " . (string)$granularity . ")";
 	}
 }
 
 // echo $query;
 
-if ($_POST['method'] == 'export_voltage') {
+if ($method == 'export_voltage') {
 
 	$delimiter = ",";
 	$f = fopen('php://memory', 'w');
@@ -137,7 +172,7 @@ if ($_POST['method'] == 'export_voltage') {
 
 }
 
-if ($_POST['method'] == 'export_irradiance') {
+if ($method == 'export_irradiance') {
 
 	$delimiter = ",";
 	$f = fopen('php://memory', 'w');
@@ -193,7 +228,7 @@ if ($_POST['method'] == 'export_irradiance') {
 
 }
 
-if ($_POST['method'] == 'view_irradiance') {
+if ($method == 'view_irradiance') {
 
 	$result = sqlsrv_query($maindatabaseHandle, $query, array(), array("Scrollable" => "buffered"));
 	if (sqlsrv_num_rows($result) > 0) {
@@ -242,7 +277,7 @@ if ($_POST['method'] == 'view_irradiance') {
 
 }
 
-if ($_POST['method'] == 'plot_irradiance_time') {
+if ($method == 'plot_irradiance_time') {
 
 	$arr0['name']    = 'Timestamp';
 	$arr[1]['name']  = 'DNI_299.1nm';
