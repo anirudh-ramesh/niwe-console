@@ -173,7 +173,20 @@
 											<input type="text" name="dateTo" id="view_chart_to_date" class="form-control" placeholder="To Date" />
 										</div>
 										<div class="col-md-3">
-											<input type="button" name="View_Chart" id="View_Chart" value="View Irradiance-Time" class="btn btn-info" />
+											<select id="granularity" name="granularity">
+												<option value="">Periodicity</option>
+												<option value="1">1 Minute</option>
+												<option value="2">2 Minutes</option>
+												<option value="3">5 Minutes</option>
+												<option value="4">10 Minutes</option>
+												<option value="5">15 Minutes</option>
+												<option value="6">20 Minutes</option>
+												<option value="7">30 Minutes</option>
+												<option value="8">60 Minutes</option>
+											</select>
+										</div>
+										<div class="col-md-3">
+											<input type="button" name="View_Chart" id="View_Chart" value="View Irradiance-λ" class="btn btn-info" />
 										</div>
 										<div style="clear:both"></div>
 										<br>
@@ -312,16 +325,17 @@
 			$('#View_Chart').click(function() {
 				var dateFrom = $('#view_chart_from_date').val();
 				var dateTo = $('#view_chart_to_date').val();
+				var granularity = $('#granularity').val().toString();
 				if(dateFrom != '' && dateTo != '') {
-					getAjaxData(dateFrom, dateTo);
+					getAjaxData(dateFrom, dateTo, granularity);
 				} else {
 					alert("Select Date");
 				}
 			});
 		});
-		function getAjaxData(dateFrom, dateTo) {
+		function getAjaxData(dateFrom, dateTo, granularity) {
 			//use getJSON to get the dynamic data via AJAX call
-			$.getJSON('chart_data.php', {dateFrom: dateFrom, dateTo: dateTo}, function(json) {
+			$.getJSON('chartAPI.php', {dateFrom: dateFrom, dateTo: dateTo, granularity: granularity, method: "plot_irradiance_time"}, function(json) {
 				options.xAxis.categories = json[0]['data']; //xAxis: {categories: []}
 				options.series[0] = json[1];
 				options.series[1] = json[2];
