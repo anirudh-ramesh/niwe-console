@@ -250,7 +250,7 @@
 		if (station.length > 0) {
 			$.ajax({
 				type: "POST",
-				url: "irradiance_time.php",
+				url: "irradiance_wavelength.php",
 				data: "station=" + station,
 				cache: false,
 				success: function(html) {
