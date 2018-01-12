@@ -15,10 +15,12 @@ if (!isset($_SESSION['station'])) {
 	echo "Error: 'station' unavailable in this session.";
 	// ...and exit...
 	exit;
+} else {
+	$stationNumber = $_SESSION['station'];
 }
 
 // ...otherwise, retrieve the station name
-$result = sqlsrv_query($maindatabaseHandle, "SELECT [" . $es_number . "] FROM [" . $maindatabaseName . "].[dbo].[" . $es_stations . "] WHERE " . $es_stationNumber . " = " . $_SESSION['station'] . ";");
+$result = sqlsrv_query($maindatabaseHandle, "SELECT [" . $es_number . "] FROM [" . $maindatabaseName . "].[dbo].[" . $es_stations . "] WHERE " . $es_stationNumber . " = " . $stationNumber . ";");
 while ($row = sqlsrv_fetch_array($result)) {
 	$stationName = $row[$es_number];
 }
@@ -91,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 // echo $method;
 // echo $granularity;
 
-$subquery_prefix = "(SELECT " . $es_value . ", " . $es_stationNumber . ", " . $es_time . " FROM [" . $maindatabaseName . "].[dbo].[" . $es_data . "] WHERE " . $es_stationNumber . " = " . $_SESSION['station'] . " AND " . $es_functionNumber . " = 0 AND " . $es_parameterNumber . " = ";
+$subquery_prefix = "(SELECT " . $es_value . ", " . $es_stationNumber . ", " . $es_time . " FROM [" . $maindatabaseName . "].[dbo].[" . $es_data . "] WHERE " . $es_stationNumber . " = " . $stationNumber . " AND " . $es_functionNumber . " = 0 AND " . $es_parameterNumber . " = ";
 $subquery_suffix = " AND " . $es_time . " BETWEEN '" . $start_date . "' AND '" . $end_date . "')";
 
 // echo $subquery_prefix;
