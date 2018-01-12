@@ -3,6 +3,9 @@
 // Retrieve database connection handles
 include('../../config/init.php');
 
+nameChannel = "set";
+nameVoltage = "voltage";
+
 // Start the access session
 session_start();
 
@@ -102,22 +105,22 @@ $subquery_suffix = " AND " . $es_time . " BETWEEN '" . $start_date . "' AND '" .
 
 $query_prefix = "SELECT ";
 for ($index = 1; $index <= $nChannels; $index++) {
-	$query_prefix = $query_prefix . "AVG(set" . (string)$index . "." . $es_value . ") AS voltage" . (string)$index . ", ";
+	$query_prefix = $query_prefix . "AVG(" . $nameChannel . (string)$index . "." . $es_value . ") AS " . $nameVoltage . (string)$index . ", ";
 }
-// $query_prefix = $query_prefix . "MAX(set1." . $es_stationNumber . ") AS station, ";
-$query_prefix = $query_prefix . "MAX(set1." . $es_time . ") AS timestmp ";
+// $query_prefix = $query_prefix . "MAX(" . $nameChannel . "1." . $es_stationNumber . ") AS station, ";
+$query_prefix = $query_prefix . "MAX(" . $nameChannel . "1." . $es_time . ") AS timestmp ";
 $query_prefix = $query_prefix . "from ";
 
 // echo $query_prefix;
 
-$query = $query_prefix . "\n" . $subquery_prefix . (string)$iChannels . $subquery_suffix . " AS set1 inner join \n";
+$query = $query_prefix . "\n" . $subquery_prefix . (string)$iChannels . $subquery_suffix . " AS " . $nameChannel . "1 inner join \n";
 for ($channel = $iChannels + 1; $channel <= $iChannels + $nChannels - 1; $channel++) {
 	$set = $channel - $iChannels + 1;
-	$query = $query . $subquery_prefix . (string)$channel . $subquery_suffix . " AS set" . (string)$set . " ON set" . (string)($set - 1) . "." . $es_time . " = set" . (string)$set . "." . $es_time . " AND set" . (string)($set - 1) . "." . $es_stationNumber . " = set" . (string)$set . "." . $es_stationNumber;
+	$query = $query . $subquery_prefix . (string)$channel . $subquery_suffix . " AS " . $nameChannel . (string)$set . " ON " . $nameChannel . (string)($set - 1) . "." . $es_time . " = " . $nameChannel . (string)$set . "." . $es_time . " AND " . $nameChannel . (string)($set - 1) . "." . $es_stationNumber . " = " . $nameChannel . (string)$set . "." . $es_stationNumber;
 	if ($channel != $iChannels + $nChannels - 1) {
 		$query = $query . " inner join \n";
 	} else {
-		$query = $query . "\n GROUP BY DATEPART(YEAR, value1.Fecha), DATEPART(MONTH, value1.Fecha), DATEPART(DAY, value1.Fecha), DATEPART(HOUR, value1.Fecha), (DATEPART(MINUTE, set1." . $es_time . ") / " . (string)$granularity . ")";
+		$query = $query . "\n GROUP BY DATEPART(YEAR, " . $nameChannel . "1.Fecha), DATEPART(MONTH, " . $nameChannel . "1.Fecha), DATEPART(DAY, " . $nameChannel . "1.Fecha), DATEPART(HOUR, " . $nameChannel . "1.Fecha), (DATEPART(MINUTE, " . $nameChannel . "1." . $es_time . ") / " . (string)$granularity . ")";
 	}
 }
 
@@ -146,16 +149,16 @@ if ($method == 'export_voltage') {
 	while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
 		$lineData = array(
 			date_format($row['timestmp'], "Y-m-d H:i"),
-			number_format((float)$row['variable1'], 3, '.', ''),
-			number_format((float)$row['variable2'], 3, '.', ''),
-			number_format((float)$row['variable3'], 3, '.', ''),
-			number_format((float)$row['variable4'], 3, '.', ''),
-			number_format((float)$row['variable5'], 3, '.', ''),
-			number_format((float)$row['variable6'], 3, '.', ''),
-			number_format((float)$row['variable7'], 3, '.', ''),
-			number_format((float)$row['variable8'], 3, '.', ''),
-			number_format((float)$row['variable9'], 3, '.', ''),
-			number_format((float)$row['variable10'], 3, '.', '')
+			number_format((float)$row[$nameVoltage . '1'], 3, '.', ''),
+			number_format((float)$row[$nameVoltage . '2'], 3, '.', ''),
+			number_format((float)$row[$nameVoltage . '3'], 3, '.', ''),
+			number_format((float)$row[$nameVoltage . '4'], 3, '.', ''),
+			number_format((float)$row[$nameVoltage . '5'], 3, '.', ''),
+			number_format((float)$row[$nameVoltage . '6'], 3, '.', ''),
+			number_format((float)$row[$nameVoltage . '7'], 3, '.', ''),
+			number_format((float)$row[$nameVoltage . '8'], 3, '.', ''),
+			number_format((float)$row[$nameVoltage . '9'], 3, '.', ''),
+			number_format((float)$row[$nameVoltage . '10'], 3, '.', '')
 		);
 		fputcsv($f, $lineData, $delimiter);
 	}
@@ -164,7 +167,7 @@ if ($method == 'export_voltage') {
 	fseek($f, 0);
 	// Set headers to download the file
 	header('Content-Type: text/csv');
-	header('Station-Number: '.$stationName);
+	header('Station-Number: ' . $stationName);
 	// header('Content-Disposition: attachment; filename="' . $filename . '";');
 	// Throw all remaining data on a file pointer
 	fpassthru($f);
@@ -198,7 +201,7 @@ if ($method == 'export_irradiance') {
 			$query2 = "SELECT * FROM [Soreva].[dbo].[conversion_constant] where id=$i AND station=$station;";
 			$result2 = sqlsrv_query($sidedatabaseHandle, $query2, array() , array("Scrollable" => "buffered"));
 			while ($row1 = sqlsrv_fetch_array($result2, SQLSRV_FETCH_ASSOC)) {
-				$y[$i] = ($row["variable" . "$i"] - $row1['Offset_V1'] * $row1['Gain_V'] - $row1['Offset_V2']) / ($row1['Gain_V'] * $row1['Gain_DNI']);
+				$y[$i] = ($row[$nameVoltage . "$i"] - $row1['Offset_V1'] * $row1['Gain_V'] - $row1['Offset_V2']) / ($row1['Gain_V'] * $row1['Gain_DNI']);
 			}
 		}
 		$lineData = array(
@@ -220,7 +223,7 @@ if ($method == 'export_irradiance') {
 	fseek($f, 0);
 	// Set headers to download the file
 	header('Content-Type: text/csv');
-	header('Station-Number: '.$stationName);
+	header('Station-Number: ' . $stationName);
 	//header('Content-Disposition: attachment; filename="data.csv";');
 	// Throw all remaining data on a file pointer
 	fpassthru($f);
@@ -253,7 +256,7 @@ if ($method == 'view_irradiance') {
 				$query2 = "SELECT * FROM [Soreva].[dbo].[conversion_constant] where id=$i AND station=$station;";
 				$result2 = sqlsrv_query($sidedatabaseHandle, $query2, array() , array("Scrollable" => "buffered"));
 				while ($row1 = sqlsrv_fetch_array($result2, SQLSRV_FETCH_ASSOC)) {
-					$y[$i] = ($row["variable" . "$i"] - $row1['Offset_V1'] * $row1['Gain_V'] - $row1['Offset_V2']) / ($row1['Gain_V'] * $row1['Gain_DNI']);
+					$y[$i] = ($row[$nameVoltage . "$i"] - $row1['Offset_V1'] * $row1['Gain_V'] - $row1['Offset_V2']) / ($row1['Gain_V'] * $row1['Gain_DNI']);
 				}
 			}
 
@@ -303,7 +306,7 @@ if ($method == 'plot_irradiance_time') {
 			$result2 = sqlsrv_query ($sidedatabaseHandle,$query2, array(), array("Scrollable"=>"buffered"));
 
 			while ($row1 = sqlsrv_fetch_array ($result2, SQLSRV_FETCH_ASSOC)) {
-				$arr[$i]['data'][] = ($row["variable"."$i"] - $row1['Offset_V1'] * $row1['Gain_V'] - $row1['Offset_V2']) / ($row1['Gain_V'] * $row1['Gain_DNI']);
+				$arr[$i]['data'][] = ($row[$nameVoltage . "$i"] - $row1['Offset_V1'] * $row1['Gain_V'] - $row1['Offset_V2']) / ($row1['Gain_V'] * $row1['Gain_DNI']);
 			}
 
 		}
