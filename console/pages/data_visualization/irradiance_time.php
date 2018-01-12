@@ -154,12 +154,18 @@
 								<div align="left" class="row">
 									<div class="col-md-12">
 										<?php
+
 											session_start();
+
 											$station = ($_REQUEST["station"] <> "") ? trim($_REQUEST["station"]) : "";
+
 											$_SESSION['station'] = $_REQUEST["station"];
+
 											include('../../config/init.php');
+
 											$query = "SELECT [" . $es_stationNumber . "],[" . $es_number . "] FROM [" . $maindatabaseName . "].[dbo].[" . $es_stations . "] ;";
 											$result = sqlsrv_query($maindatabaseHandle, $query);
+
 										?>
 										<label>Station &nbsp</label>
 										<select name="station" onChange="selectStation(this);">
