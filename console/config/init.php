@@ -23,6 +23,8 @@ $nChannels = 10;
 $start_time = "00:00:00";
 $end_time = "23:59:00";
 
+$delimiter = ",";
+
 $maindatabaseHandle = sqlsrv_connect($serverName, array("Database" => $maindatabaseName, "UID" => $username, "PWD" => $password));
 $sidedatabaseHandle = sqlsrv_connect($serverName, array("Database" => $sidedatabaseName, "UID" => $username, "PWD" => $password));
 
