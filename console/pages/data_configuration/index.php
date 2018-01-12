@@ -13,7 +13,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>MITRA</title>
+		<title>NIWE - AMS Console</title>
 		<!-- Tell the browser to be responsive to screen width -->
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 		<!-- Bootstrap 3.3.6 -->
@@ -167,9 +167,9 @@
 				<!-- Logo -->
 				<a href="../../index.php" class="logo">
 					<!-- mini logo for sidebar mini 50x50 pixels -->
-					<span class="logo-mini"style="font-size:12px;">MITRA<sub>1.0</sub></span>
+					<span class="logo-mini"style="font-size:12px;">NIWE - AMS Console<sub>1.0</sub></span>
 					<!-- logo for regular state and mobile devices -->
-					<span class="logo-lg"style="font-size:12px;">MITRA <sub>1.0</sub></span>
+					<span class="logo-lg"style="font-size:12px;">NIWE - AMS Console <sub>1.0</sub></span>
 				</a>
 				<!-- Header Navbar: style can be found in header.less -->
 				<nav class="navbar navbar-static-top">

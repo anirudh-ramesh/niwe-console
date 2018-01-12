@@ -6,7 +6,7 @@
 <html>
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>MITRA</title>
+		<title>NIWE - AMS Console</title>
 		<!--<meta http-equiv="refresh" content="240">-->
 		<meta name="description" content="Solar plant operational intelligence software for O&M "><meta name="robots" content="index,follow">
 		<meta name="author" content="Suraj Anand">

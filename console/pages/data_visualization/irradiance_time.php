@@ -12,7 +12,7 @@
 		<script src="http://code.highcharts.com/modules/exporting.js"></script>
 		<script src="https://code.highcharts.com/modules/no-data-to-display.js"></script>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>MITRA</title>
+		<title>NIWE - AMS Console</title>
 		<!-- Tell the browser to be responsive to screen width -->
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 		<!-- Bootstrap 3.3.6 -->
