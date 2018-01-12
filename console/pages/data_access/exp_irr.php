@@ -12,10 +12,12 @@ while ($row = sqlsrv_fetch_array($result)){
 	$stationName = $row[$es_number];
 }
 
-if (isset($_SESSION['station'], $_POST["exp_irr_from_date"], $_POST["exp_irr_to_date"])) {
+$granularity = ($_POST["granularity"] <> "") ? $_POST["granularity"] : "1";
 
-	$start_date = $_POST["exp_vol_from_date"] . " 00:00:00";
-	$end_date   = $_POST["exp_vol_to_date"] . " 23:59:00";
+if (isset($_SESSION['station'], $_POST["access_dateFrom"], $_POST["access_dateTo"])) {
+
+	$start_date = $_POST["access_dateFrom"] . " 00:00:00";
+	$end_date   = $_POST["access_dateTo"] . " 23:59:00";
 
 	$subquery_prefix = "(SELECT " . $es_value . ", " . $es_stationNumber . ", " . $es_time . " FROM [" . $maindatabaseName . "].[dbo].[" . $es_data . "] WHERE " . $es_stationNumber . " = " . (string)$station . " AND " . $es_functionNumber . " = 0 AND " . $es_parameterNumber . " = ";
 	$subquery_suffix = " AND " . $es_time . " BETWEEN '" . $start_date . "' AND '" . $end_date . "')";

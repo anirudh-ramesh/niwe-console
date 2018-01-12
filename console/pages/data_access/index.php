@@ -200,28 +200,23 @@
 								<div align="center" class="row">
 									<div class="col-md-12">
 										<div class="col-md-3">
-											<input type="text" name="view_irr_from_date" id="view_irr_from_date" class="form-control" placeholder="From Date" />
+											<input type="text" name="access_dateFrom" id="access_dateFrom" class="form-control" placeholder="From Date" />
 										</div>
 										<div class="col-md-3">
-											<input type="text" name="view_irr_to_date" id="view_irr_to_date" class="form-control" placeholder="To Date" />
+											<input type="text" name="access_dateTo" id="access_dateTo" class="form-control" placeholder="To Date" />
 										</div>
 										<div class="col-md-3">
-											<input type="button" name="View_Irr" id="View_Irr" value="View DNI" class="btn btn-info" />
-										</div>
-										<div style="clear:both"></div>
-										<br>
-									</div>
-								</div>
-								<div align="center" class="row">
-									<div class="col-md-12">
-										<div class="col-md-3">
-											<input type="text" name="exp_irr_from_date" id="exp_irr_from_date" class="form-control" placeholder="From Date" />
-										</div>
-										<div class="col-md-3">
-											<input type="text" name="exp_irr_to_date" id="exp_irr_to_date" class="form-control" placeholder="To Date" />
-										</div>
-										<div class="col-md-3">
-											<input type="button" name="Exp_Irr" id="Exp_Irr" value="Export DNI" class="btn btn-info" />
+											<select id="granularity" name="granularity">
+												<option value="">Periodicity</option>
+												<option value="1">1 Minute</option>
+												<option value="2">2 Minutes</option>
+												<option value="5">5 Minutes</option>
+												<option value="10">10 Minutes</option>
+												<option value="15">15 Minutes</option>
+												<option value="20">20 Minutes</option>
+												<option value="30">30 Minutes</option>
+												<option value="60">60 Minutes</option>
+											</select>
 										</div>
 										<div style="clear:both"></div>
 										<br>
@@ -230,13 +225,13 @@
 								<div align="center" class="row">
 									<div class="col-md-12">
 										<div class="col-md-3">
-											<input type="text" name="exp_vol_from_date" id="exp_vol_from_date" class="form-control" placeholder="From Date" />
+											<input type="button" name="viewDNI" id="viewDNI" value="View DNI" class="btn btn-info" />
 										</div>
 										<div class="col-md-3">
-											<input type="text" name="exp_vol_to_date" id="exp_vol_to_date" class="form-control" placeholder="To Date" />
+											<input type="button" name="exportDNI" id="exportDNI" value="Export DNI" class="btn btn-info" />
 										</div>
 										<div class="col-md-3">
-											<input type="button" name="Exp_Vol" id="Exp_Vol" value="Export Voltage" class="btn btn-info" />
+											<input type="button" name="exportV" id="exportV" value="Export Voltage" class="btn btn-info" />
 										</div>
 										<div style="clear:both"></div>
 										<br>
@@ -291,18 +286,19 @@
 		$.datepicker.setDefaults({
 			dateFormat: 'yy-mm-dd'
 		});
-		$(function(){
-			$("#view_irr_from_date").datepicker();
-			$("#view_irr_to_date").datepicker();
+		$(function() {
+			$("#access_dateFrom").datepicker();
+			$("#access_dateTo").datepicker();
 		});
-		$('#View_Irr').click(function() {
-			var view_irr_from_date = $('#view_irr_from_date').val();
-			var view_irr_to_date = $('#view_irr_to_date').val();
-			if(view_irr_from_date != '' && view_irr_to_date != '') {
+		$('#viewDNI').click(function() {
+			var access_dateFrom = $('#access_dateFrom').val();
+			var access_dateTo = $('#access_dateTo').val();
+			var granularity = $('#granularity').val().toString();
+			if(access_dateFrom != '' && access_dateTo != '') {
 				$.ajax({
 					url:"view_irr.php",
 					method:"POST",
-					data:{view_irr_from_date:view_irr_from_date, view_irr_to_date:view_irr_to_date},
+					data:{access_dateFrom: access_dateFrom, access_dateTo: access_dateTo, granularity: granularity},
 					beforeSend: function() {
 						$('#table').html('Loading, please wait...');
 					},
@@ -316,31 +312,73 @@
 				alert("Select Date");
 			}
 		});
-	});
-</script>
-<script>
-	$(document).ready(function() {
-		$.datepicker.setDefaults({
-			dateFormat: 'yy-mm-dd'
-		});
-		$(function() {
-			$("#exp_irr_from_date").datepicker();
-			$("#exp_irr_to_date").datepicker();
-		});
-		$('#Exp_Irr').click(function(){
-			var exp_irr_from_date = $('#exp_irr_from_date').val();
-			var exp_irr_to_date = $('#exp_irr_to_date').val();
-			if(exp_irr_from_date != '' && exp_irr_to_date != '') {
+		$('#exportDNI').click(function() {
+			var access_dateFrom = $('#access_dateFrom').val();
+			var access_dateTo = $('#access_dateTo').val();
+			var granularity = $('#granularity').val().toString();
+			if(access_dateFrom != '' && access_dateTo != '') {
 				$.ajax({
 					url:"exp_irr.php",
 					method:"POST",
-					data:{exp_irr_from_date:exp_irr_from_date, exp_irr_to_date:exp_irr_to_date},
+					data:{access_dateFrom: access_dateFrom, access_dateTo: access_dateTo, granularity: granularity},
 					beforeSend: function() {
 						$('#table').html('Exporting DNI, please wait...');
 					},
 					success: function(response, status, xhr) {
 						$('#table').html('Exported DNI');
-						var filename = xhr.getResponseHeader('Station-Number')+"_DNI_"+exp_irr_from_date.replace(/-/g, '')+"0000"+"_"+exp_irr_to_date.replace(/-/g, '')+"2359"+"_1minute_"+moment().format("YYYYMMDDhhmm")+".csv";
+						var filename = xhr.getResponseHeader('Station-Number')+"_DNI_"+access_dateFrom.replace(/-/g, '')+"0000"+"_"+access_dateTo.replace(/-/g, '')+"2359"+"_"+granularity+"minute_"+moment().format("YYYYMMDDhhmm")+".csv";
+						var disposition = xhr.getResponseHeader('Content-Disposition');
+						if (disposition && disposition.indexOf('attachment') !== -1) {
+							var filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+							var matches = filenameRegex.exec(disposition);
+							if (matches != null && matches[1]) filename = matches[1].replace(/['"]/g, '');
+						}
+						var type = xhr.getResponseHeader('Content-Type');
+						var blob = new Blob([response], { type: type });
+						if (typeof window.navigator.msSaveBlob !== 'undefined') {
+							// IE workaround for "HTML7007: One or more blob URLs were revoked by closing the blob for which they were created. These URLs will no longer resolve as the data backing the URL has been freed."
+							window.navigator.msSaveBlob(blob, filename);
+						} else {
+							var URL = window.URL || window.webkitURL;
+							var downloadUrl = URL.createObjectURL(blob);
+							if (filename) {
+								// use HTML5 a[download] attribute to specify filename
+								var a = document.createElement("a");
+								// safari doesn't support this yet
+								if (typeof a.download === 'undefined') {
+									window.location = downloadUrl;
+								} else {
+									a.href = downloadUrl;
+									a.download = filename;
+									document.body.appendChild(a);
+									a.click();
+								}
+							} else {
+								window.location = downloadUrl;
+							}
+							setTimeout(function () { URL.revokeObjectURL(downloadUrl); }, 100); // cleanup
+						}
+					}
+				});
+			} else {
+				alert("Select Date");
+			}
+		});
+		$('#exportV').click(function() {
+			var access_dateFrom = $('#access_dateFrom').val();
+			var access_dateTo = $('#access_dateTo').val();
+			var granularity = $('#granularity').val().toString();
+			if (access_dateFrom != '' && access_dateTo != '') {
+				$.ajax({
+					url:"exp_vol.php",
+					method:"POST",
+					data:{access_dateFrom: access_dateFrom, access_dateTo: access_dateTo, granularity: granularity},
+					beforeSend: function() {
+						$('#table').html('Exporting Voltage, please wait...');
+					},
+					success: function(response, status, xhr) {
+						$('#table').html('Exported Voltage');
+						var filename = xhr.getResponseHeader('Station-Number')+"_V_"+access_dateFrom.replace(/-/g, '')+"0000"+"_"+access_dateTo.replace(/-/g, '')+"2359"+"_"+granularity+"minute_"+moment().format("YYYYMMDDhhmm")+".csv";
 						var disposition = xhr.getResponseHeader('Content-Disposition');
 						if (disposition && disposition.indexOf('attachment') !== -1) {
 							var filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
@@ -379,66 +417,4 @@
 			}
 		});
 	});
-</script>
-<script>
-	$(document).ready(function(){
-	$.datepicker.setDefaults({
-		dateFormat: 'yy-mm-dd'
-	});
-	$(function() {
-		$("#exp_vol_from_date").datepicker();
-		$("#exp_vol_to_date").datepicker();
-	});
-	$('#Exp_Vol').click(function() {
-		var exp_vol_from_date = $('#exp_vol_from_date').val();
-		var exp_vol_to_date = $('#exp_vol_to_date').val();
-		if (exp_vol_from_date != '' && exp_vol_to_date != '') {
-			$.ajax({
-				url:"exp_vol.php",
-				method:"POST",
-				data:{exp_vol_from_date:exp_vol_from_date, exp_vol_to_date:exp_vol_to_date},
-				beforeSend: function() {
-					$('#table').html('Exporting Voltage, please wait...');
-				},
-				success: function(response, status, xhr) {
-					$('#table').html('Exported Voltage');
-					var filename = xhr.getResponseHeader('Station-Number')+"_V_"+exp_vol_from_date.replace(/-/g, '')+"0000"+"_"+exp_vol_to_date.replace(/-/g, '')+"2359"+"_1minute_"+moment().format("YYYYMMDDhhmm")+".csv";
-					var disposition = xhr.getResponseHeader('Content-Disposition');
-					if (disposition && disposition.indexOf('attachment') !== -1) {
-						var filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
-						var matches = filenameRegex.exec(disposition);
-						if (matches != null && matches[1]) filename = matches[1].replace(/['"]/g, '');
-					}
-					var type = xhr.getResponseHeader('Content-Type');
-					var blob = new Blob([response], { type: type });
-					if (typeof window.navigator.msSaveBlob !== 'undefined') {
-						// IE workaround for "HTML7007: One or more blob URLs were revoked by closing the blob for which they were created. These URLs will no longer resolve as the data backing the URL has been freed."
-						window.navigator.msSaveBlob(blob, filename);
-					} else {
-						var URL = window.URL || window.webkitURL;
-						var downloadUrl = URL.createObjectURL(blob);
-						if (filename) {
-							// use HTML5 a[download] attribute to specify filename
-							var a = document.createElement("a");
-							// safari doesn't support this yet
-							if (typeof a.download === 'undefined') {
-								window.location = downloadUrl;
-							} else {
-								a.href = downloadUrl;
-								a.download = filename;
-								document.body.appendChild(a);
-								a.click();
-							}
-						} else {
-							window.location = downloadUrl;
-						}
-						setTimeout(function () { URL.revokeObjectURL(downloadUrl); }, 100); // cleanup
-					}
-				}
-			});
-		} else {
-			alert("Select Date");
-		}
-	});
-});
 </script>

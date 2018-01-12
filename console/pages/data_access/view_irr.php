@@ -6,10 +6,12 @@ $station = $_SESSION['station'];
 
 include('../../config/init.php');
 
-if (isset($_SESSION['station'], $_POST["view_irr_from_date"], $_POST["view_irr_to_date"])) {
+$granularity = ($_POST["granularity"] <> "") ? $_POST["granularity"] : "1";
 
-	$start_date = $_POST["view_irr_from_date"] . " 00:00:00";
-	$end_date   = $_POST["view_irr_to_date"] . " 23:59:00";
+if (isset($_SESSION['station'], $_POST["access_dateFrom"], $_POST["access_dateTo"])) {
+
+	$start_date = $_POST["access_dateFrom"] . " 00:00:00";
+	$end_date   = $_POST["access_dateTo"] . " 23:59:00";
 
 	$subquery_prefix = "(SELECT " . $es_value . ", " . $es_stationNumber . ", " . $es_time . " FROM [" . $maindatabaseName . "].[dbo].[" . $es_data . "] WHERE " . $es_stationNumber . " = " . (string)$station . " AND " . $es_functionNumber . " = 0 AND " . $es_parameterNumber . " = ";
 	$subquery_suffix = " AND " . $es_time . " BETWEEN '" . $start_date . "' AND '" . $end_date . "')";
@@ -30,7 +32,7 @@ if (isset($_SESSION['station'], $_POST["view_irr_from_date"], $_POST["view_irr_t
 			$query = $query . " inner join \n";
 		}
 		else {
-			$query = "\n";
+			$query = $query . "\n GROUP BY DATEPART(YEAR, value1.Fecha), DATEPART(MONTH, value1.Fecha), DATEPART(DAY, value1.Fecha), DATEPART(HOUR, value1.Fecha), (DATEPART(MINUTE, value1." . $es_time . ") / " . (string)$granularity . ")";
 		}
 	}
 
@@ -77,7 +79,7 @@ if (isset($_SESSION['station'], $_POST["view_irr_from_date"], $_POST["view_irr_t
 		}
 		echo "</table>";
 	}
-	else echo "No data to display!<br>";
+	else echo "No data to display!";
 }
 
 ?>
