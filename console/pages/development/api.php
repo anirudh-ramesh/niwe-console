@@ -120,7 +120,7 @@ for ($channel = $iChannels + 1; $channel <= $iChannels + $nChannels - 1; $channe
 	if ($channel != $iChannels + $nChannels - 1) {
 		$query = $query . " inner join \n";
 	} else {
-		$query = $query . "\n GROUP BY DATEPART(YEAR, " . $nameChannel . "1.Fecha), DATEPART(MONTH, " . $nameChannel . "1.Fecha), DATEPART(DAY, " . $nameChannel . "1.Fecha), DATEPART(HOUR, " . $nameChannel . "1.Fecha), (DATEPART(MINUTE, " . $nameChannel . "1." . $es_time . ") / " . (string)$granularity . ")";
+		$query = $query . "\n GROUP BY DATEPART(YEAR, " . $nameChannel . "1." . $es_time . "), DATEPART(MONTH, " . $nameChannel . "1." . $es_time . "), DATEPART(DAY, " . $nameChannel . "1." . $es_time . "), DATEPART(HOUR, " . $nameChannel . "1." . $es_time . "), (DATEPART(MINUTE, " . $nameChannel . "1." . $es_time . ") / " . (string)$granularity . ")";
 	}
 }
 
