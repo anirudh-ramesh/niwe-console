@@ -1,6 +1,5 @@
 <?php
 	include("../../../check.php");
-	include ('../../config/init.php');
 ?>
 <!DOCTYPE html>
 <html>
@@ -184,7 +183,7 @@
 
 											include('../../config/init.php');
 
-											$query = "SELECT [" . $es_stationNumber . "],[" . $es_number . "] FROM "[" . $maindatabaseName . "]".[dbo].[" . $es_stations . "] ;";
+											$query = "SELECT [" . $es_stationNumber . "],[" . $es_number . "] FROM [" . $maindatabaseName . "].[dbo].[" . $es_stations . "] ;";
 											$result = sqlsrv_query($maindatabaseHandle, $query);
 
 										?>
