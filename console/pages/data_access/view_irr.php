@@ -18,10 +18,10 @@ if (isset($_SESSION['station'], $_POST["access_dateFrom"], $_POST["access_dateTo
 
 	$query_prefix = "SELECT ";
 	for ($index = 1; $index <= $nChannels; $index++) {
-		$query_prefix = $query_prefix . "value" . (string)$index . "." . $es_value . " AS variable" . (string)$index . ", ";
+		$query_prefix = $query_prefix . "AVG(value" . (string)$index . "." . $es_value . ") AS variable" . (string)$index . ", ";
 	}
-	$query_prefix = $query_prefix . "value1." . $es_stationNumber . " AS station, ";
-	$query_prefix = $query_prefix . "value1." . $es_time . " AS timestmp ";
+	$query_prefix = $query_prefix . "MAX(value1." . $es_stationNumber . ") AS station, ";
+	$query_prefix = $query_prefix . "MAX(value1." . $es_time . ") AS timestmp ";
 	$query_prefix = $query_prefix . "from ";
 
 	$query = $query_prefix . "\n" . $subquery_prefix . (string)$iChannels . $subquery_suffix . " AS value1 inner join \n";
