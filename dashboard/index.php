@@ -101,6 +101,11 @@
 										<i class="fa fa-line-chart"></i>View DNI-Time Plot
 									</a>
 								</li>
+								<li>
+									<a href="pages/data_visualization/irradiance_wavelength.php">
+										<i class="fa fa-line-chart"></i>View DNI-λ Plot
+									</a>
+								</li>
 							</ul>
 						</li>
 						<li>
