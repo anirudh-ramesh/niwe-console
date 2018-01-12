@@ -190,7 +190,7 @@ if ($method == 'export_irradiance') {
 	$result = sqlsrv_query($maindatabaseHandle, $query, array() , array("Scrollable" => "buffered"));
 	while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
 		$y[0] = $row['timestmp'];
-		
+
 		for ($i = 1; $i <= 10; $i++) {
 			$query2 = "SELECT * FROM [Soreva].[dbo].[conversion_constant] where id=$i AND station=$station;";
 			$result2 = sqlsrv_query($sidedatabaseHandle, $query2, array() , array("Scrollable" => "buffered"));
