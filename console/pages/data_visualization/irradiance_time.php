@@ -104,6 +104,13 @@
 							</a>
 							<ul class="active treeview-menu">
 								<li>
+									<a href="dashboard.php">
+										<i class="fa fa-line-chart"></i>Dashboard
+									</a>
+								</li>
+							</ul>
+							<ul class="active treeview-menu">
+								<li>
 									<a href="irradiance_time.php">
 										<i class="fa fa-line-chart"></i>View DNI-Time Plot
 									</a>

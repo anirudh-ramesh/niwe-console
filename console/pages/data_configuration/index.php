@@ -232,6 +232,13 @@
 									<i class="fa fa-dashboard"></i>
 									<span>Visualize</span>
 								</a>
+								<ul class="active treeview-menu">
+									<li>
+										<a href="../data_visualization/dashboard.php">
+											<i class="fa fa-line-chart"></i>Dashboard
+										</a>
+									</li>
+								</ul>
 								<ul class="treeview-menu">
 									<li>
 										<a href="../data_visualization/irradiance_time.php">
