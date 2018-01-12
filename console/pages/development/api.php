@@ -124,7 +124,6 @@ for ($channel = $iChannels + 1; $channel <= $iChannels + $nChannels - 1; $channe
 
 if ($method == 'export_voltage') {
 
-	$delimiter = ",";
 	$f = fopen('php://memory', 'w');
 	$fields = array(
 		'Timestamp',
@@ -173,7 +172,6 @@ if ($method == 'export_voltage') {
 
 if ($method == 'export_irradiance') {
 
-	$delimiter = ",";
 	$f = fopen('php://memory', 'w');
 	$fields = array(
 		'Timestamp',
