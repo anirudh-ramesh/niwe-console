@@ -20,7 +20,7 @@
 			while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
 				if ($row['uid'] > 0) {
 					$_SESSION['username'] = $username;
-					header("location: dashboard");
+					header('location: console');
 				} else {
 					$error = "Incorrect username or password.";
 				}
