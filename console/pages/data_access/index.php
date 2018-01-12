@@ -121,7 +121,7 @@
 						<li class="treeview">
 							<a href="../../index.php">
 								<i class="fa fa-dashboard"></i>
-								<span>Dashboard</span>
+								<span>Visualize</span>
 							</a>
 							<ul class="treeview-menu">
 								<li>
@@ -141,13 +141,13 @@
 						<li>
 							<a href="#">
 								<i class="fa fa-download"></i>
-								<span>Data Access</span>
+								<span>Retrieve</span>
 							</a>
 						</li>
 						<li>
 							<a href="../data_configuration/">
 								<i class="fa fa-file-text-o"></i>
-								<span>Data Config</span>
+								<span>Configure</span>
 							</a>
 						</li>
 						<li>
