@@ -126,14 +126,14 @@
 							<ul class="treeview-menu">
 								<li>
 									<a href="../data_visualization/irradiance_time.php">
-										<i class="fa fa-line-chart"></i>View Irradiance-Time Plot
+										<i class="fa fa-line-chart"></i>View DNI-Time Plot
 									</a>
 								</li>
 							</ul>
 							<ul class="active treeview-menu">
 								<li>
 									<a href="../data_visualization/irradiance_wavelength.php">
-										<i class="fa fa-line-chart"></i>View Irradiance-λ Plot
+										<i class="fa fa-line-chart"></i>View DNI-λ Plot
 									</a>
 								</li>
 							</ul>
@@ -200,7 +200,7 @@
 											<input type="text" name="view_irr_to_date" id="view_irr_to_date" class="form-control" placeholder="To Date" />
 										</div>
 										<div class="col-md-3">
-											<input type="button" name="View_Irr" id="View_Irr" value="View Irradiance" class="btn btn-info" />
+											<input type="button" name="View_Irr" id="View_Irr" value="View DNI" class="btn btn-info" />
 										</div>
 										<div style="clear:both"></div>
 										<br>
@@ -215,7 +215,7 @@
 											<input type="text" name="exp_irr_to_date" id="exp_irr_to_date" class="form-control" placeholder="To Date" />
 										</div>
 										<div class="col-md-3">
-											<input type="button" name="Exp_Irr" id="Exp_Irr" value="Export Irradiance" class="btn btn-info" />
+											<input type="button" name="Exp_Irr" id="Exp_Irr" value="Export DNI" class="btn btn-info" />
 										</div>
 										<div style="clear:both"></div>
 										<br>
@@ -330,10 +330,10 @@
 					method:"POST",
 					data:{exp_irr_from_date:exp_irr_from_date, exp_irr_to_date:exp_irr_to_date},
 					beforeSend: function() {
-						$('#table').html('Exporting Irradiance, please wait...');
+						$('#table').html('Exporting DNI, please wait...');
 					},
 					success: function(response, status, xhr) {
-						$('#table').html('Exported Irradiance');
+						$('#table').html('Exported DNI');
 						var filename = xhr.getResponseHeader('Station-Number')+"_DNI_"+exp_irr_from_date.replace(/-/g, '')+"0000"+"_"+exp_irr_to_date.replace(/-/g, '')+"2359"+"_1minute_"+moment().format("YYYYMMDDhhmm")+".csv";
 						var disposition = xhr.getResponseHeader('Content-Disposition');
 						if (disposition && disposition.indexOf('attachment') !== -1) {

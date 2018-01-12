@@ -98,7 +98,7 @@
 							<ul class="treeview-menu">
 								<li>
 									<a href="pages/data_visualization/irradiance_time.php">
-										<i class="fa fa-line-chart"></i>View Irradiance-Time Plot
+										<i class="fa fa-line-chart"></i>View DNI-Time Plot
 									</a>
 								</li>
 							</ul>

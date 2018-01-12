@@ -105,14 +105,14 @@
 							<ul class="active treeview-menu">
 								<li>
 									<a href="irradiance_time.php">
-										<i class="fa fa-line-chart"></i>View Irradiance-Time Plot
+										<i class="fa fa-line-chart"></i>View DNI-Time Plot
 									</a>
 								</li>
 							</ul>
 							<ul class="active treeview-menu">
 								<li>
 									<a href="irradiance_wavelength.php">
-										<i class="fa fa-line-chart"></i>View Irradiance-λ Plot
+										<i class="fa fa-line-chart"></i>View DNI-λ Plot
 									</a>
 								</li>
 							</ul>
@@ -186,7 +186,7 @@
 											</select>
 										</div>
 										<div class="col-md-3">
-											<input type="button" name="View_Chart" id="View_Chart" value="View Irradiance-Time" class="btn btn-info" />
+											<input type="button" name="View_Chart" id="View_Chart" value="View DNI-Time" class="btn btn-info" />
 										</div>
 										<div style="clear:both"></div>
 										<br>
@@ -196,7 +196,7 @@
 							<div class="col-md-12">
 								<div class="box">
 									<div class="box-header with-border">
-										<center><h3 class="box-title">Irradiance-Time Plot</h3></center>
+										<center><h3 class="box-title">DNI-Time Plot</h3></center>
 										<div class="box-tools pull-right">
 											<button type="button" class="btn btn-box-tool" data-widget="collapse">
 												<i class="fa fa-minus"></i>
@@ -310,7 +310,7 @@
 				valueDecimals: 2
 			},
 			exporting: {
-				filename: 'Irradiance-Time'
+				filename: 'Direct Normal Irradiance - Time'
 			},
 			series: []
 		};
