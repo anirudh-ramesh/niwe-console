@@ -122,7 +122,7 @@
 							</a>
 						</li>
 						<li>
-							<a href="pages/date_configuration/">
+							<a href="pages/data_configuration/">
 								<i class="fa fa-file-text-o"></i>
 								<span>Configure</span>
 							</a>
