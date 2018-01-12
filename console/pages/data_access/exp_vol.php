@@ -22,10 +22,10 @@ if (isset($_SESSION['station'], $_POST["exp_vol_from_date"], $_POST["exp_vol_to_
 
 	$query_prefix = "SELECT ";
 	for ($index = 1; $index <= $nChannels; $index++) {
-		$query_prefix = $query_prefix . "value" . (string)$index . "." . $es_value . " AS variable" . (string)$index . ", ";
+		$query_prefix = $query_prefix . "AVG(value" . (string)$index . "." . $es_value . ") AS variable" . (string)$index . ", ";
 	}
-	$query_prefix = $query_prefix . "value1." . $es_stationNumber . " AS station, ";
-	$query_prefix = $query_prefix . "value1." . $es_time . " AS timestmp ";
+	$query_prefix = $query_prefix . "MAX(value1." . $es_stationNumber . ") AS station, ";
+	$query_prefix = $query_prefix . "MAX(value1." . $es_time . ") AS timestmp ";
 	$query_prefix = $query_prefix . "from ";
 
 	$query = $query_prefix . "\n" . $subquery_prefix . (string)$iChannels . $subquery_suffix . " AS value1 inner join \n";
@@ -36,7 +36,7 @@ if (isset($_SESSION['station'], $_POST["exp_vol_from_date"], $_POST["exp_vol_to_
 			$query = $query . " inner join \n";
 		}
 		else {
-			$query = "\n";
+			$query = $query . "\n GROUP BY DATEPART(YEAR, value1.Fecha), DATEPART(MONTH, value1.Fecha), DATEPART(DAY, value1.Fecha), DATEPART(HOUR, value1.Fecha), (DATEPART(MINUTE, value1." . $es_time . ") / " . (string)$granularity . ")";
 		}
 	}
 
