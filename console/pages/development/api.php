@@ -3,8 +3,8 @@
 // Retrieve database connection handles
 include('../../config/init.php');
 
-nameChannel = "set";
-nameVoltage = "voltage";
+$nameChannel = "set";
+$nameVoltage = "voltage";
 
 // Start the access session
 session_start();
