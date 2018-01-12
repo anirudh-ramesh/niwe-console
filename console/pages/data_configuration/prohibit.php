@@ -147,8 +147,8 @@
 							<br>
 							<br>
 							<br>
-							<p>You do not have adequate privileges to access this page. Please contact one of the following individuals for acquiring permissions.
-							<p>Mr Vipin Gandhi<br>+91 98 10 22 11 99
+							<p style="text-align:justify">You do not have adequate privileges to access this page. Please contact one of the following individuals for acquiring permissions.
+							<p style="text-align:justify">Mr Vipin Gandhi<br>+91 98 10 22 11 99
 						</div>
 					</div>
 					<!-- /.row -->
@@ -160,8 +160,7 @@
 					<div class="pull-right hidden-xs">
 							<b>Version</b> 1.0
 					</div>
-					<strong>Copyright &copy; 2018 <a href="http://soreva.co.in" target="_blank">Soreva</a>.</strong> All rights
-					reserved.
+					<strong>Copyright &copy; 2018 <a href="http://soreva.co.in" target="_blank">Soreva</a>.</strong> All rights reserved.
 				</footer>
 				<!-- Control Sidebar -->
 				<!-- /.control-sidebar -->

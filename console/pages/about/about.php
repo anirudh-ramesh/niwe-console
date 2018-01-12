@@ -147,13 +147,13 @@
 							<br>
 							<br>
 							<br>
-							<p>The SPUV is a precision sun photometer that measures direct solar spectral irradiance at up to ten discrete wavelengths in the UV-B and visible regions. The SPUV exceeds the WMO specifications for sun photometers and is the first commercial sun photometer to measure narrow bandwidths in the UV-B.</p>
+							<p style="text-align:justify">The SPUV is a precision sun photometer that measures direct solar spectral irradiance at up to ten discrete wavelengths in the UV-B and visible regions. The SPUV exceeds the WMO specifications for sun photometers and is the first commercial sun photometer to measure narrow bandwidths in the UV-B.</p>
 
-							<p>The SPUV is normally used to measure the optical depth of an atmospheric constituent, for example ozone or aerosols. The principle of measurement is based on Beer's Law.</p>
+							<p style="text-align:justify">The SPUV is normally used to measure the optical depth of an atmospheric constituent, for example ozone or aerosols. The principle of measurement is based on Beer's Law.</p>
 
-							<p>The SPUV is mounted on a user-supplied solar tracker and is maintained pointed directly at the sun. The flat universal mounting plate on the SPUV enables it to be attached to most trackers. State-of-the-art thin film interference filters permit only photons within a prescribed wavelength to reach a dedicated detector. Filtered, monochromatic light is detected by solid state photodiodes and the resulting photocurrents are amplified by highly sensitive, ultra low noise electronic circuitry. Analog outputs, one for each wavelength are proportional to incident spectral irradiance.</p>
+							<p style="text-align:justify">The SPUV is mounted on a user-supplied solar tracker and is maintained pointed directly at the sun. The flat universal mounting plate on the SPUV enables it to be attached to most trackers. State-of-the-art thin film interference filters permit only photons within a prescribed wavelength to reach a dedicated detector. Filtered, monochromatic light is detected by solid state photodiodes and the resulting photocurrents are amplified by highly sensitive, ultra low noise electronic circuitry. Analog outputs, one for each wavelength are proportional to incident spectral irradiance.</p>
 
-							<p>A Geonica MeteoStation data acquisition and control system digitizes each analog channel and the associated web application software converts data into spectral irradiance calibrated in W/m2-nm.</p>
+							<p style="text-align:justify">A Geonica MeteoStation data acquisition and control system digitizes each analog channel and the associated web application software converts data into spectral irradiance calibrated in W/m2-nm.</p>
 						</div>
 					</div>
 					<!-- /.row -->
