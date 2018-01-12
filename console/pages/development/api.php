@@ -10,8 +10,7 @@ $nameVoltage = "voltage";
 session_start();
 
 // If the 'station' session variable is unavailable...
-if (!isset($_SESSION['station']))
-{
+if (!isset($_SESSION['station'])) {
 	// ...echo a message...
 	echo "Error: 'station' unavailable in this session.";
 	// ...and exit...
@@ -27,8 +26,7 @@ while ($row = sqlsrv_fetch_array($result)) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 	// If the 'dateFrom', 'dateTo' or 'method' are unavailable...
-	if (!$_POST['dateFrom'])
-	{
+	if (!$_POST['dateFrom']) {
 		// ...echo a message...
 		echo "Error: 'dateFrom' unavailable in this HTTP POST request's body.";
 		// ...and exit...
@@ -36,8 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	} else {
 		$start_date = $_POST['dateFrom'] . " " . $start_time;
 	}
-	if (!$_POST['dateTo'])
-	{
+	if (!$_POST['dateTo']) {
 		// ...echo a message...
 		echo "Error: 'dateTo' unavailable in this HTTP POST request's body.";
 		// ...and exit...
@@ -45,8 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	} else {
 		$end_date = $_POST['dateTo'] . " " . $end_time;
 	}
-	if (!$_POST['method'])
-	{
+	if (!$_POST['method']) {
 		// ...echo a message...
 		echo "Error: 'method' unavailable in this HTTP POST request's body.";
 		// ...and exit...
@@ -60,8 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 } elseif ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 	// If the 'dateFrom', 'dateTo' or 'method' are unavailable...
-	if (!$_GET['dateFrom'])
-	{
+	if (!$_GET['dateFrom']) {
 		// ...echo a message...
 		echo "Error: 'dateFrom' unavailable in this HTTP GET request.";
 		// ...and exit...
@@ -69,8 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	} else {
 		$start_date = $_GET['dateFrom'] . " " . $start_time;
 	}
-	if (!$_GET['dateTo'])
-	{
+	if (!$_GET['dateTo']) {
 		// ...echo a message...
 		echo "Error: 'dateTo' unavailable in this HTTP GET request.";
 		// ...and exit...
