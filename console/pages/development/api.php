@@ -20,9 +20,9 @@ if (!isset($_SESSION['station'])) {
 }
 
 // ...otherwise, retrieve the station name
-$result = sqlsrv_query($maindatabaseHandle, "SELECT [" . $es_number . "] FROM [" . $maindatabaseName . "].[dbo].[" . $es_stations . "] WHERE " . $es_stationNumber . " = " . $stationNumber . ";");
-while ($row = sqlsrv_fetch_array($result)) {
-	$stationName = $row[$es_number];
+$stations = sqlsrv_query($maindatabaseHandle, "SELECT [" . $es_number . "] FROM [" . $maindatabaseName . "].[dbo].[" . $es_stations . "] WHERE " . $es_stationNumber . " = " . $stationNumber . ";");
+while ($station = sqlsrv_fetch_array($stations)) {
+	$stationName = $station[$es_number];
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -122,187 +122,170 @@ for ($channel = $iChannels + 1; $channel <= $iChannels + $nChannels - 1; $channe
 
 // echo $query;
 
-if ($method == 'export_voltage') {
+$wavelengths = sqlsrv_query($sidedatabaseHandle, "SELECT [" . $en_wavelength . "] FROM [" . $sidedatabaseName . "].[dbo].[" . $en_wavelength . "s] ORDER BY [" . $en_channelNumber . "] ASC;");
 
-	$f = fopen('php://memory', 'w');
+if ($method == 'export_voltage') {
 
 	$fields = array();
 	array_push($fields, 'Timestamp');
-	$result = sqlsrv_query($sidedatabaseHandle, "SELECT [" . $en_wavelength . "] FROM [" . $sidedatabaseName . "].[dbo].[" . $en_wavelength . "s] ORDER BY [" . $en_channelNumber . "] ASC;");
-	while ($row = sqlsrv_fetch_array($result)) {
-		array_push($fields, "Voltage_" . $row[$en_wavelength]);
+	while ($wavelength = sqlsrv_fetch_array($wavelengths)) {
+		array_push($fields, "Voltage_" . $wavelength[$en_wavelength]);
 	}
-	fputcsv($f, $fields, $delimiter);
-	$result = sqlsrv_query($maindatabaseHandle, $query, array() , array("Scrollable" => "buffered"));
-	while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+
+	$fileHandle = fopen('php://memory', 'w');
+	fputcsv($fileHandle, $fields, $delimiter);
+
+	$measurementSets = sqlsrv_query($maindatabaseHandle, $query, array(), array("Scrollable" => "buffered"));
+	while ($measurementSet = sqlsrv_fetch_array($measurementSets, SQLSRV_FETCH_ASSOC)) {
+
 		$lineData = array();
-		array_push($lineData, date_format($row['timestmp'], "Y-m-d H:i"));
+
+		array_push($lineData, date_format($measurementSet['timestmp'], "Y-m-d H:i"));
+
 		for ($channel = 1; $channel <= $nChannels; $channel++) {
-			array_push($lineData, number_format((float)$row[$nameVoltage . (string)$channel], 3, '.', ''));
+			array_push($lineData, number_format((float)$measurementSet[$nameVoltage . (string)$channel], 3, '.', ''));
 		}
-		fputcsv($f, $lineData, $delimiter);
+
+		fputcsv($fileHandle, $lineData, $delimiter);
+
 	}
 
 	// Move to the beginning of the file
-	fseek($f, 0);
+	fseek($fileHandle, 0);
 	// Set headers to download the file
 	header('Content-Type: text/csv');
-	header('Station-Number: ' . $stationName);
+	header('Station-Name: ' . $stationName);
 	// header('Content-Disposition: attachment; filename="' . $filename . '";');
 	// Throw all remaining data on a file pointer
-	fpassthru($f);
+	fpassthru($fileHandle);
 	exit;
 
 }
 
 if ($method == 'export_irradiance') {
 
-	$f = fopen('php://memory', 'w');
-	$fields = array(
-		'Timestamp',
-		'DNI_299.1nm',
-		'DNI_324.4nm',
-		'DNI_367.2nm',
-		'DNI_496.1nm',
-		'DNI_614.2nm',
-		'DNI_671.3nm',
-		'DNI_782.9nm',
-		'DNI_869.2nm',
-		'DNI_938.1nm',
-		'DNI_1037.8nm'
-	);
-	fputcsv($f, $fields, $delimiter);
-	$result = sqlsrv_query($maindatabaseHandle, $query, array() , array("Scrollable" => "buffered"));
-	while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
-		$y[0] = $row['timestmp'];
-
-		for ($i = 1; $i <= 10; $i++) {
-			$query2 = "SELECT * FROM [Soreva].[dbo].[conversion_constant] where id=$i AND station=$station;";
-			$result2 = sqlsrv_query($sidedatabaseHandle, $query2, array() , array("Scrollable" => "buffered"));
-			while ($row1 = sqlsrv_fetch_array($result2, SQLSRV_FETCH_ASSOC)) {
-				$y[$i] = ($row[$nameVoltage . "$i"] - $row1['Offset_V1'] * $row1['Gain_V'] - $row1['Offset_V2']) / ($row1['Gain_V'] * $row1['Gain_DNI']);
-			}
-		}
-		$lineData = array(
-			date_format($y[0], "Y-m-d H:i") ,
-			number_format((float)$y[1], 3, '.', '') ,
-			number_format((float)$y[2], 3, '.', '') ,
-			number_format((float)$y[3], 3, '.', '') ,
-			number_format((float)$y[4], 3, '.', '') ,
-			number_format((float)$y[5], 3, '.', '') ,
-			number_format((float)$y[6], 3, '.', '') ,
-			number_format((float)$y[7], 3, '.', '') ,
-			number_format((float)$y[8], 3, '.', '') ,
-			number_format((float)$y[9], 3, '.', '') ,
-			number_format((float)$y[10], 3, '.', '')
-		);
-		fputcsv($f, $lineData, $delimiter);
+	$fields = array();
+	array_push($fields, 'Timestamp');
+	while ($wavelength = sqlsrv_fetch_array($wavelengths)) {
+		array_push($fields, "DNI_" . $wavelength[$en_wavelength]);
 	}
+
+	$fileHandle = fopen('php://memory', 'w');
+	fputcsv($fileHandle, $fields, $delimiter);
+
+	$measurementSets = sqlsrv_query($maindatabaseHandle, $query, array(), array("Scrollable" => "buffered"));
+	while ($measurementSet = sqlsrv_fetch_array($measurementSets, SQLSRV_FETCH_ASSOC)) {
+
+		$lineData = array();
+
+		array_push($lineData, date_format($measurementSet['timestmp'], "Y-m-d H:i"));
+
+		for ($channel = 1; $channel <= $nChannels; $channel++) {
+
+			$configurationSet = sqlsrv_query($sidedatabaseHandle, "SELECT * FROM [" . $sidedatabaseName . "].[dbo].[" . $en_voltage2irradiance . "] WHERE " . $en_channelNumber . " = " . (string)$channel . " AND " . $en_stationNumber . " = " . (string)$stationNumber . ";", array(), array("Scrollable" => "buffered"));
+
+			while ($configuration = sqlsrv_fetch_array($configurationSet, SQLSRV_FETCH_ASSOC)) {
+				$irradiance[$channel] = ($measurementSet[$nameVoltage . (string)$channel] - $configuration['Offset_DNI'] * $configuration['Gain'] - $configuration['Offset_V']) / ($configuration['Gain'] * $configuration['Sensitivity']);
+			}
+
+			array_push($lineData, number_format((float)$irradiance[$channel], 3, '.', ''));
+
+		}
+
+		fputcsv($fileHandle, $lineData, $delimiter);
+
+	}
+
 	// Move to the beginning of the file
-	fseek($f, 0);
+	fseek($fileHandle, 0);
 	// Set headers to download the file
 	header('Content-Type: text/csv');
-	header('Station-Number: ' . $stationName);
+	header('Station-Name: ' . $stationName);
 	//header('Content-Disposition: attachment; filename="data.csv";');
 	// Throw all remaining data on a file pointer
-	fpassthru($f);
+	fpassthru($fileHandle);
 	exit;
 
 }
 
 if ($method == 'view_irradiance') {
 
-	$result = sqlsrv_query($maindatabaseHandle, $query, array(), array("Scrollable" => "buffered"));
-	if (sqlsrv_num_rows($result) > 0) {
+	$measurementSets = sqlsrv_query($maindatabaseHandle, $query, array(), array("Scrollable" => "buffered"));
+	if (sqlsrv_num_rows($measurementSets) > 0) {
+
 		echo "<table class='table table-bordered'>";
 		echo "<tr>";
 		echo "<th align='center' width='40'>" . 'Timestamp' . "</th>";
-		echo "<th align='center' width='40'>" . 'DNI_299.1nm' . "</th>";
-		echo "<th align='center' width='40'>" . 'DNI_324.4nm' . "</th>";
-		echo "<th align='center' width='40'>" . 'DNI_367.2nm' . "</th>";
-		echo "<th align='center' width='40'>" . 'DNI_496.1nm' . "</th>";
-		echo "<th align='center' width='40'>" . 'DNI_614.2nm' . "</th>";
-		echo "<th align='center' width='40'>" . 'DNI_671.3nm' . "</th>";
-		echo "<th align='center' width='40'>" . 'DNI_782.9nm' . "</th>";
-		echo "<th align='center' width='40'>" . 'DNI_869.2nm' . "</th>";
-		echo "<th align='center' width='40'>" . 'DNI_938.1nm' . "</th>";
-		echo "<th align='center' width='40'>" . 'DNI_1037.8nm' . "</th>";
+
+		while ($wavelength = sqlsrv_fetch_array($wavelengths)) {
+			echo "<th align='center' width='40'>DNI_" . $wavelength[$en_wavelength] . "</th>";
+		}
+
 		echo "</tr>";
-		while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
-			$y[0] = $row['timestmp'];
-			
-			for ($i = 1; $i <= 10; $i++) {
-				$query2 = "SELECT * FROM [Soreva].[dbo].[conversion_constant] where id=$i AND station=$station;";
-				$result2 = sqlsrv_query($sidedatabaseHandle, $query2, array() , array("Scrollable" => "buffered"));
-				while ($row1 = sqlsrv_fetch_array($result2, SQLSRV_FETCH_ASSOC)) {
-					$y[$i] = ($row[$nameVoltage . "$i"] - $row1['Offset_V1'] * $row1['Gain_V'] - $row1['Offset_V2']) / ($row1['Gain_V'] * $row1['Gain_DNI']);
-				}
-			}
+
+		while ($measurementSet = sqlsrv_fetch_array($measurementSets, SQLSRV_FETCH_ASSOC)) {
 
 			echo "<tr>";
-			echo "<td align='center' width='40'>" . date_format($y[0], "Y-m-d H:i") . "</td>";
-			echo "<td align='center' width='40'>" . number_format((float)$y[1], 3, '.', '') . "</td>";
-			echo "<td align='center' width='40'>" . number_format((float)$y[2], 3, '.', '') . "</td>";
-			echo "<td align='center' width='40'>" . number_format((float)$y[3], 3, '.', '') . "</td>";
-			echo "<td align='center' width='40'>" . number_format((float)$y[4], 3, '.', '') . "</td>";
-			echo "<td align='center' width='40'>" . number_format((float)$y[5], 3, '.', '') . "</td>";
-			echo "<td align='center' width='40'>" . number_format((float)$y[6], 3, '.', '') . "</td>";
-			echo "<td align='center' width='40'>" . number_format((float)$y[7], 3, '.', '') . "</td>";
-			echo "<td align='center' width='40'>" . number_format((float)$y[8], 3, '.', '') . "</td>";
-			echo "<td align='center' width='40'>" . number_format((float)$y[9], 3, '.', '') . "</td>";
-			echo "<td align='center' width='40'>" . number_format((float)$y[10], 3, '.', '') . "</td>";
+			echo "<td align='center' width='40'>" . date_format($measurementSet['timestmp'], "Y-m-d H:i") . "</td>";
+			
+			for ($channel = 1; $channel <= $nChannels; $channel++) {
+
+				$configurationSet = sqlsrv_query($sidedatabaseHandle, "SELECT * FROM [" . $sidedatabaseName . "].[dbo].[" . $en_voltage2irradiance . "] WHERE " . $en_channelNumber . " = " . (string)$channel . " AND " . $en_stationNumber . " = " . (string)$stationNumber . ";", array(), array("Scrollable" => "buffered"));
+
+				while ($configuration = sqlsrv_fetch_array($configurationSet, SQLSRV_FETCH_ASSOC)) {
+					$irradiance[$channel] = ($measurementSet[$nameVoltage . (string)$channel] - $configuration['Offset_DNI'] * $configuration['Gain'] - $configuration['Offset_V']) / ($configuration['Gain'] * $configuration['Sensitivity']);
+				}
+
+			echo "<td align='center' width='40'>" . number_format((float)$irradiance[$channel], 3, '.', '') . "</td>";
+
+			}
+
 			echo "</tr>";
+
 		}
+
 		echo "</table>";
+
 	}
+
 	else echo "No data to display!<br>";
 
 }
 
 if ($method == 'plot_irradiance_time') {
 
-	$arr0['name']    = 'Timestamp';
-	$arr[1]['name']  = 'DNI_299.1nm';
-	$arr[2]['name']  = 'DNI_324.4nm';
-	$arr[3]['name']  = 'DNI_367.2nm';
-	$arr[4]['name']  = 'DNI_496.1nm';
-	$arr[5]['name']  = 'DNI_614.2nm';
-	$arr[6]['name']  = 'DNI_671.3nm';
-	$arr[7]['name']  = 'DNI_782.9nm';
-	$arr[8]['name']  = 'DNI_869.2nm';
-	$arr[9]['name']  = 'DNI_938.1nm';
-	$arr[10]['name'] = 'DNI_1037.8nm';
-
-	$result = sqlsrv_query ($maindatabaseHandle,$query, array(), array("Scrollable"=>"buffered"));
-	while ($row = sqlsrv_fetch_array ($result, SQLSRV_FETCH_ASSOC)) {
-
-		$arr0['data'][] = date_format ($row['timestmp'],"Y-m-d  H:i");
-
-		for ($i = 1; $i <= 10; $i++) {
-
-			$query2 = "SELECT * FROM [Soreva].[dbo].[conversion_constant] where id=$i AND station=$station;";
-
-			$result2 = sqlsrv_query ($sidedatabaseHandle,$query2, array(), array("Scrollable"=>"buffered"));
-
-			while ($row1 = sqlsrv_fetch_array ($result2, SQLSRV_FETCH_ASSOC)) {
-				$arr[$i]['data'][] = ($row[$nameVoltage . "$i"] - $row1['Offset_V1'] * $row1['Gain_V'] - $row1['Offset_V2']) / ($row1['Gain_V'] * $row1['Gain_DNI']);
-			}
-
-		}
+	$time['name'] = 'Timestamp';
+	$channel = 0;
+	while ($wavelength = sqlsrv_fetch_array($wavelengths)) {
+		$channel = $channel + 1;
+		$irradiance[$channel]['name'] = "DNI_" . $wavelength[$en_wavelength]
 	}
 
 	$payload = array();
-	array_push($payload, $arr0);
-	array_push($payload, $arr[1]);
-	array_push($payload, $arr[2]);
-	array_push($payload, $arr[3]);
-	array_push($payload, $arr[4]);
-	array_push($payload, $arr[5]);
-	array_push($payload, $arr[6]);
-	array_push($payload, $arr[7]);
-	array_push($payload, $arr[8]);
-	array_push($payload, $arr[9]);
-	array_push($payload, $arr[10]);
+
+	$measurementSets = sqlsrv_query ($maindatabaseHandle,$query, array(), array("Scrollable" => "buffered"));
+	while ($measurementSet = sqlsrv_fetch_array ($measurementSets, SQLSRV_FETCH_ASSOC)) {
+
+		$time['data'][] = date_format ($measurementSet['timestmp'], "Y-m-d  H:i");
+
+		for ($channel = 1; $channel <= $nChannels; $channel++) {
+
+			$configurationSet = sqlsrv_query ($sidedatabaseHandle, "SELECT * FROM [" . $sidedatabaseName . "].[dbo].[" . $en_voltage2irradiance . "] WHERE " . $en_channelNumber . " = " . (string)$channel . " AND " . $en_stationNumber . " = " . (string)$stationNumber . ";", array(), array("Scrollable" => "buffered"));
+
+			while ($configuration = sqlsrv_fetch_array ($configurationSet, SQLSRV_FETCH_ASSOC)) {
+				$irradiance[$channel]['data'][] = ($measurementSet[$nameVoltage . (string)$channel] - $configuration['Offset_DNI'] * $configuration['Gain'] - $configuration['Offset_V']) / ($configuration['Gain'] * $configuration['Sensitivity']);
+			}
+
+		}
+
+	}
+
+	array_push($payload, $time);
+
+	for ($channel = 1; $channel <= $nChannels; $channel++) {
+		array_push($payload, $irradiance[$channel]);
+	}
+
 	print json_encode($payload, JSON_NUMERIC_CHECK);
 
 	sqlsrv_close($maindatabaseHandle);
