@@ -326,7 +326,7 @@
 					},
 					success: function(response, status, xhr) {
 						$('#table').html('Exported DNI');
-						var filename = xhr.getResponseHeader('Station-Number')+"_DNI_"+access_dateFrom.replace(/-/g, '')+"0000"+"_"+access_dateTo.replace(/-/g, '')+"2359"+"_"+granularity+"minute_"+moment().format("YYYYMMDDhhmm")+".csv";
+						var filename = xhr.getResponseHeader('Station-Name')+"_DNI_"+access_dateFrom.replace(/-/g, '')+"0000"+"_"+access_dateTo.replace(/-/g, '')+"2359"+"_"+granularity+"minute_"+moment().format("YYYYMMDDhhmm")+".csv";
 						var disposition = xhr.getResponseHeader('Content-Disposition');
 						if (disposition && disposition.indexOf('attachment') !== -1) {
 							var filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
@@ -378,7 +378,7 @@
 					},
 					success: function(response, status, xhr) {
 						$('#table').html('Exported Voltage');
-						var filename = xhr.getResponseHeader('Station-Number')+"_V_"+access_dateFrom.replace(/-/g, '')+"0000"+"_"+access_dateTo.replace(/-/g, '')+"2359"+"_"+granularity+"minute_"+moment().format("YYYYMMDDhhmm")+".csv";
+						var filename = xhr.getResponseHeader('Station-Name')+"_V_"+access_dateFrom.replace(/-/g, '')+"0000"+"_"+access_dateTo.replace(/-/g, '')+"2359"+"_"+granularity+"minute_"+moment().format("YYYYMMDDhhmm")+".csv";
 						var disposition = xhr.getResponseHeader('Content-Disposition');
 						if (disposition && disposition.indexOf('attachment') !== -1) {
 							var filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;

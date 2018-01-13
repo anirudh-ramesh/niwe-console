@@ -79,7 +79,7 @@ if (isset($_SESSION['station'], $_POST["access_dateFrom"], $_POST["access_dateTo
 	fseek($f, 0);
 	// Set headers to download the file
 	header('Content-Type: text/csv');
-	header('Station-Number: '.$stationName);
+	header('Station-Name: '.$stationName);
 	// header('Content-Disposition: attachment; filename="' . $filename . '";');
 	// Throw all remaining data on a file pointer
 	fpassthru($f);
