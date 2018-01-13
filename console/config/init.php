@@ -17,8 +17,10 @@ $es_data = "Datos";
 $es_parameterNumber = "NumParametro";
 $es_functionNumber = "NumFuncion";
 
+$en_stationNumber = "stationNumber";
 $en_wavelength = "wavelength";
 $en_channelNumber = "channelNumber";
+$en_voltage2irradiance = "conversion_constant"
 
 $iChannels = 16;
 $nChannels = 10;
