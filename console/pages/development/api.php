@@ -125,36 +125,21 @@ for ($channel = $iChannels + 1; $channel <= $iChannels + $nChannels - 1; $channe
 if ($method == 'export_voltage') {
 
 	$f = fopen('php://memory', 'w');
-	$fields = array(
-		'Timestamp',
-		'Voltage_299.1nm',
-		'Voltage_324.4nm',
-		'Voltage_367.2nm',
-		'Voltage_496.1nm',
-		'Voltage_614.2nm',
-		'Voltage_671.3nm',
-		'Voltage_782.9nm',
-		'Voltage_869.2nm',
-		'Voltage_938.1nm',
-		'Voltage_1037.8nm'
-	);
 
+	$fields = array();
+	array_push($fields, 'Timestamp');
+	$result = sqlsrv_query($sidedatabaseHandle, "SELECT [" . $en_wavelength . "] FROM [" . $sidedatabaseName . "].[dbo].[" . $en_wavelength . "s] ORDER BY [" . $en_channelNumber . "] ASC;");
+	while ($row = sqlsrv_fetch_array($result)) {
+		array_push($fields, "Voltage_" . $row[$en_wavelength]);
+	}
 	fputcsv($f, $fields, $delimiter);
 	$result = sqlsrv_query($maindatabaseHandle, $query, array() , array("Scrollable" => "buffered"));
 	while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
-		$lineData = array(
-			date_format($row['timestmp'], "Y-m-d H:i"),
-			number_format((float)$row[$nameVoltage . '1'], 3, '.', ''),
-			number_format((float)$row[$nameVoltage . '2'], 3, '.', ''),
-			number_format((float)$row[$nameVoltage . '3'], 3, '.', ''),
-			number_format((float)$row[$nameVoltage . '4'], 3, '.', ''),
-			number_format((float)$row[$nameVoltage . '5'], 3, '.', ''),
-			number_format((float)$row[$nameVoltage . '6'], 3, '.', ''),
-			number_format((float)$row[$nameVoltage . '7'], 3, '.', ''),
-			number_format((float)$row[$nameVoltage . '8'], 3, '.', ''),
-			number_format((float)$row[$nameVoltage . '9'], 3, '.', ''),
-			number_format((float)$row[$nameVoltage . '10'], 3, '.', '')
-		);
+		$lineData = array();
+		array_push($lineData, date_format($row['timestmp'], "Y-m-d H:i"));
+		for ($channel = 1; $channel <= $nChannels; $channel++) {
+			array_push($lineData, number_format((float)$row[$nameVoltage . (string)$channel], 3, '.', ''));
+		}
 		fputcsv($f, $lineData, $delimiter);
 	}
 

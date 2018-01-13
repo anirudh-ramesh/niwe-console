@@ -17,6 +17,9 @@ $es_data = "Datos";
 $es_parameterNumber = "NumParametro";
 $es_functionNumber = "NumFuncion";
 
+$en_wavelength = "wavelength";
+$en_channelNumber = "channelNumber";
+
 $iChannels = 16;
 $nChannels = 10;
 
