@@ -20,7 +20,7 @@ $es_functionNumber = "NumFuncion";
 $en_stationNumber = "stationNumber";
 $en_wavelength = "wavelength";
 $en_channelNumber = "channelNumber";
-$en_voltage2irradiance = "conversion_constant";
+$en_voltage2irradiance = "voltage2irradiance";
 
 $iChannels = 16;
 $nChannels = 10;
