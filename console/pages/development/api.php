@@ -258,7 +258,7 @@ if ($method == 'plot_irradiance_time') {
 	$channel = 0;
 	while ($wavelength = sqlsrv_fetch_array($wavelengths)) {
 		$channel = $channel + 1;
-		$irradiance[$channel]['name'] = "DNI_" . $wavelength[$en_wavelength]
+		$irradiance[$channel]['name'] = "DNI_" . $wavelength[$en_wavelength];
 	}
 
 	$payload = array();
