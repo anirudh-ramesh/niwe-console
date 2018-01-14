@@ -348,7 +348,7 @@
 		});
 		function getAjaxData(dateFrom, dateTo, granularity) {
 			//use getJSON to get the dynamic data via AJAX call
-			$.getJSON('chartAPI.php', {dateFrom: dateFrom, dateTo: dateTo, granularity: granularity, method: "plot_irradiance_time"}, function(json) {
+			$.getJSON('../../interfaces/api.php', {dateFrom: dateFrom, dateTo: dateTo, granularity: granularity, method: "plot_irradiance_time"}, function(json) {
 				options.xAxis.categories = json[0]['data']; //xAxis: {categories: []}
 				options.series[0] = json[1];
 				options.series[1] = json[2];

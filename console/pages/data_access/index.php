@@ -296,9 +296,9 @@
 			var granularity = $('#granularity').val().toString();
 			if(access_dateFrom != '' && access_dateTo != '') {
 				$.ajax({
-					url:"view_irr.php",
+					url:"../../interfaces/api.php",
 					method:"POST",
-					data:{access_dateFrom: access_dateFrom, access_dateTo: access_dateTo, granularity: granularity},
+					data:{dateFrom: access_dateFrom, dateTo: access_dateTo, granularity: granularity, method: "view_irradiance"},
 					beforeSend: function() {
 						$('#table').html('Loading, please wait...');
 					},
@@ -318,9 +318,9 @@
 			var granularity = $('#granularity').val().toString();
 			if(access_dateFrom != '' && access_dateTo != '') {
 				$.ajax({
-					url:"exp_irr.php",
+					url:"../../interfaces/api.php",
 					method:"POST",
-					data:{access_dateFrom: access_dateFrom, access_dateTo: access_dateTo, granularity: granularity},
+					data:{dateFrom: access_dateFrom, dateTo: access_dateTo, granularity: granularity, method: "export_irradiance"},
 					beforeSend: function() {
 						$('#table').html('Exporting DNI, please wait...');
 					},
@@ -370,9 +370,9 @@
 			var granularity = $('#granularity').val().toString();
 			if (access_dateFrom != '' && access_dateTo != '') {
 				$.ajax({
-					url:"exp_vol.php",
+					url:"../../interfaces/api.php",
 					method:"POST",
-					data:{access_dateFrom: access_dateFrom, access_dateTo: access_dateTo, granularity: granularity},
+					data:{dateFrom: access_dateFrom, dateTo: access_dateTo, granularity: granularity, method: "export_voltage"},
 					beforeSend: function() {
 						$('#table').html('Exporting Voltage, please wait...');
 					},
