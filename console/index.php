@@ -128,7 +128,7 @@
 							</a>
 						</li>
 						<li>
-							<a href="pages/about/about.php">
+							<a href="pages/about/">
 								<i class="fa fa-info-circle"></i>
 								<span>About</span>
 							</a>
