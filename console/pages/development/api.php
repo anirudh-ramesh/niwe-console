@@ -122,7 +122,7 @@ for ($channel = $iChannels + 1; $channel <= $iChannels + $nChannels - 1; $channe
 
 // echo $query;
 
-$wavelengths = sqlsrv_query($sidedatabaseHandle, "SELECT [" . $en_wavelength . "] FROM [" . $sidedatabaseName . "].[dbo].[" . $en_wavelength . "s] ORDER BY [" . $en_channelNumber . "] ASC;");
+$wavelengths = sqlsrv_query($sidedatabaseHandle, "SELECT [" . $en_wavelength . "] FROM [" . $sidedatabaseName . "].[dbo].[" . $en_voltage2irradiance . "] WHERE [" . $en_stationNumber . "] = " . (string)$stationNumber . " ORDER BY [" . $en_channelNumber . "] ASC;");
 
 if ($method == 'export_voltage') {
 
