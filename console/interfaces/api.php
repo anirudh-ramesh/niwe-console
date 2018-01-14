@@ -1,7 +1,7 @@
 <?php
 
 // Retrieve database connection handles
-include('../../config/init.php');
+include('../config/init.php');
 
 $nameChannel = "set";
 $nameVoltage = "voltage";
