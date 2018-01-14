@@ -32,7 +32,13 @@ $delimiter = ",";
 $maindatabaseHandle = sqlsrv_connect($serverName, array("Database" => $maindatabaseName, "UID" => $username, "PWD" => $password));
 $sidedatabaseHandle = sqlsrv_connect($serverName, array("Database" => $sidedatabaseName, "UID" => $username, "PWD" => $password));
 
-$nChannels = sqlsrv_fetch_array(sqlsrv_query($sidedatabaseHandle, "SELECT count([" . $en_channelNumber . "]) FROM [" . $sidedatabaseName . "].[dbo].[" . $en_parameters . "];"));
-$iChannels = sqlsrv_fetch_array(sqlsrv_query($sidedatabaseHandle, "SELECT min([" . $en_parameterNumber . "]) FROM [" . $sidedatabaseName . "].[dbo].[" . $en_parameters . "];"));
+$response = sqlsrv_query($sidedatabaseHandle, "SELECT count([" . $en_channelNumber . "]) AS count FROM [" . $sidedatabaseName . "].[dbo].[" . $en_parameters . "];");
+while ($element = sqlsrv_fetch_array($response)) {
+	$nChannels = $element['count'];
+}
+$response = sqlsrv_query($sidedatabaseHandle, "SELECT min([" . $en_parameterNumber . "]) AS min FROM [" . $sidedatabaseName . "].[dbo].[" . $en_parameters . "];");
+while ($element = sqlsrv_fetch_array($response)) {
+	$iChannels = $element['min'];
+}
 
 ?>
