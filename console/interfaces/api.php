@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		// ...echo a message...
 		echo "Error: 'dateFrom' unavailable in this HTTP POST request's body.";
 		// ...and exit...
-		exit;
+		// exit;
 	} else {
 		$start_date = $_POST['dateFrom'] . " " . $start_time;
 	}
@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		// ...echo a message...
 		echo "Error: 'dateTo' unavailable in this HTTP POST request's body.";
 		// ...and exit...
-		exit;
+		// exit;
 	} else {
 		$end_date = $_POST['dateTo'] . " " . $end_time;
 	}
@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		// ...echo a message...
 		echo "Error: 'method' unavailable in this HTTP POST request's body.";
 		// ...and exit...
-		exit;
+		// exit;
 	} else {
 		$method = $_POST['method'];
 	}
@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		// ...echo a message...
 		echo "Error: 'dateFrom' unavailable in this HTTP GET request.";
 		// ...and exit...
-		exit;
+		// exit;
 	} else {
 		$start_date = $_GET['dateFrom'] . " " . $start_time;
 	}
@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		// ...echo a message...
 		echo "Error: 'dateTo' unavailable in this HTTP GET request.";
 		// ...and exit...
-		exit;
+		// exit;
 	} else {
 		$end_date = $_GET['dateTo'] . " " . $end_time;
 	}
@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		// ...echo a message...
 		echo "Error: 'method' unavailable in this HTTP GET request.";
 		// ...and exit...
-		exit;
+		// exit;
 	} else {
 		$method = $_GET['method'];
 	}
