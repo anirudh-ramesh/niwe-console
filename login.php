@@ -16,7 +16,7 @@
 
 			$password = md5($password);
 
-			$result = sqlsrv_query($pg_connlog, "SELECT [uid] FROM [Soreva].[dbo].[users] WHERE username='$username' and password='$password'");
+			$result = sqlsrv_query($connectionHandle, "SELECT [uid] FROM [Soreva].[dbo].[users] WHERE username='$username' and password='$password'");
 			while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
 				if ($row['uid'] > 0) {
 					$_SESSION['username'] = $username;
