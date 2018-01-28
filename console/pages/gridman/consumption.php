@@ -52,8 +52,8 @@
 		<div class="wrapper">
 			<header class="main-header">
 				<a href="../../index.php" class="logo">
-					<span class="logo-mini" style="font-size:12px;">Gridviewer - Electricity Consumption</span>
-					<span class="logo-lg" style="font-size:12px;">Gridviewer - Electricity Consumption</span>
+					<span class="logo-mini" style="font-size:12px;">Grid</span>
+					<span class="logo-lg" style="font-size:12px;">Gridviewer</span>
 				</a>
 				<nav class="navbar navbar-static-top">
 					<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
