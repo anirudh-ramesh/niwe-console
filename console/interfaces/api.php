@@ -263,7 +263,7 @@ if ($method == 'plot_irradiance_time') {
 
 	$payload = array();
 
-	$measurementSets = sqlsrv_query ($maindatabaseHandle,$query, array(), array("Scrollable" => "buffered"));
+	$measurementSets = sqlsrv_query ($maindatabaseHandle, $query, array(), array("Scrollable" => "buffered"));
 	while ($measurementSet = sqlsrv_fetch_array ($measurementSets, SQLSRV_FETCH_ASSOC)) {
 
 		$time['data'][] = date_format ($measurementSet['timestmp'], "Y-m-d  H:i");
