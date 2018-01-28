@@ -242,7 +242,7 @@
 				},
 				renderTo: 'container',
 				type: 'line',
-				zoomType: 'x',
+				zoomType: 'xy',
 				borderWidth: 0,
 				resetZoomButton: {
 					position: {
@@ -253,7 +253,6 @@
 				}
 			},
 			credits: {
-				//enabled: false
 				text: 'Gridman',
 				href: '#'
 			},
@@ -268,25 +267,52 @@
 			xAxis: {
 				categories: []
 			},
-			yAxis: {
+			yAxis: [{
 				title: {
-					text: 'Load (MVA)'
+					text: 'Load',
+					color: '#c3f902'
 				},
-				plotLines: [{
-					value: 0,
-					width: 1,
-					color: '#808080'
-				}]
-			},
+				labels: {
+					format: '{value} MVA',
+					color: '#c3f902'
+				}
+			}, {
+				title: {
+					text: 'Frequency',
+					color: '#0f6307'
+				},
+				labels: {
+					format: '{value} Hz',
+					color: '#0f6307'
+				},
+				opposite: true
+			}],
 			tooltip: {
-				pointFormat: '<span style="color:{series.color}">{series.name}</span>:<b>{point.y}</b> (W/m2)/nm <br/>',
+				shared: true,
 				changeDecimals: 2,
 				valueDecimals: 2
 			},
 			exporting: {
 				filename: 'Electricity Consumption - Time'
 			},
-			series: []
+			series: [{
+				name: 'Load',
+				type: 'line',
+				color: '#c3f902',
+				data: [],
+				tooltip: {
+					valueSuffix: ' MVA'
+				}
+			}, {
+				name: 'Frequency',
+				type: 'line',
+				color: '#0f6307',
+				data: [],
+				tooltip: {
+					valueSuffix: ' Hz'
+				},
+				yAxis: 1
+			}]
 		};
 		$(document).ready(function() {
 			$.datepicker.setDefaults({
@@ -311,8 +337,8 @@
 			//use getJSON to get the dynamic data via AJAX call
 			$.getJSON('../../interfaces/gridman.php', {dateFrom: dateFrom, dateTo: dateTo, granularity: granularity, method: "plot_electricityConsumption"}, function(json) {
 				options.xAxis.categories = json[0]['data']; //xAxis: {categories: []}
-				options.series[0] = json[1];
-				options.series[1] = json[2];
+				options.series[0].data = json[1]['data'];
+				options.series[1].data = json[2]['data'];
 				chart = new Highcharts.Chart(options);
 			});
 		}
