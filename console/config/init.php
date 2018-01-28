@@ -26,7 +26,7 @@ $en_voltage2irradiance = "voltage2irradiance";
 
 $en_plants = "plants";
 $en_time = "Timestamp";
-$en_stateName = "stateName";
+$en_stateCode = "stateCode";
 $en_power = "power";
 $en_frequency = "frequency";
 $en_consumptionTable = "dispatch_load";

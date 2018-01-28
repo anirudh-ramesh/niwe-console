@@ -13,7 +13,7 @@ if (!isset($_SESSION['state'])) {
 	// ...and exit
 	exit;
 } else {
-	$stateName = $_SESSION['state'];
+	$stateCode = $_SESSION['state'];
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 if ($method == 'plot_electricityConsumption') {
 
-	$query = 'SELECT MIN(' . $en_time . ') AS ' . $en_time . ', AVG(' . $en_power . ') AS ' . $en_power . ', AVG(' . $en_frequency . ') AS ' . $en_frequency . ' FROM [' . $sidedatabaseName . '].[dbo].[' . $en_consumptionTable . '] WHERE ' . $en_stateName . ' = \'' . $stateName . '\' AND ' . $en_time . ' BETWEEN \'' . $start_date . '\' AND \'' . $end_date . '\' GROUP BY DATEPART(YEAR, ' . $en_time . '), DATEPART(MONTH, ' . $en_time . '), DATEPART(DAY, ' . $en_time . '), DATEPART(HOUR, ' . $en_time . '), DATEPART(MINUTE, ' . $en_time . ') / ' . (string)$granularity;
+	$query = 'SELECT MIN(' . $en_time . ') AS ' . $en_time . ', AVG(' . $en_power . ') AS ' . $en_power . ', AVG(' . $en_frequency . ') AS ' . $en_frequency . ' FROM [' . $sidedatabaseName . '].[dbo].[' . $en_consumptionTable . '] WHERE ' . $en_stateCode . ' = \'' . $stateCode . '\' AND ' . $en_time . ' BETWEEN \'' . $start_date . '\' AND \'' . $end_date . '\' GROUP BY DATEPART(YEAR, ' . $en_time . '), DATEPART(MONTH, ' . $en_time . '), DATEPART(DAY, ' . $en_time . '), DATEPART(HOUR, ' . $en_time . '), DATEPART(MINUTE, ' . $en_time . ') / ' . (string)$granularity;
 
 	$time['name'] = 'Timestamp';
 	$load['name'] = 'Electrical Load';

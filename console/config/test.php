@@ -23,7 +23,7 @@ $en_voltage2irradiance = "voltage2irradiance";
 
 $en_plants = "plants";
 $en_time = "Timestamp";
-$en_stateName = "stateName";
+$en_stateCode = "stateCode";
 $en_power = "power";
 $en_frequency = "frequency";
 $en_consumptionTable = "dispatch_load";
@@ -41,7 +41,7 @@ $end_date = "2018-01-07 " . $end_time;
 $delimiter = ",";
 
 $station = 2548;
-$stateName = 'DL';
+$stateCode = 'DL';
 
 //
 
@@ -68,7 +68,7 @@ $stateName = 'DL';
 // 	}
 // }
 
-$query = 'SELECT MIN(' . $en_time . ') AS ' . $en_time . ', AVG(' . $en_power . ') AS ' . $en_power . ', AVG(' . $en_frequency . ') AS ' . $en_frequency . ' FROM [Soreva].[dbo].[dispatch_load] WHERE ' . $en_stateName . ' = \'' . $stateName . '\' AND ' . $en_time . ' BETWEEN \'' . $start_date . '\' AND \'' . $end_date . '\' GROUP BY DATEPART(YEAR, ' . $en_time . '), DATEPART(MONTH, ' . $en_time . '), DATEPART(DAY, ' . $en_time . '), DATEPART(HOUR, ' . $en_time . '), DATEPART(MINUTE, ' . $en_time . ') / ' . (string)$granularity;
+$query = 'SELECT MIN(' . $en_time . ') AS ' . $en_time . ', AVG(' . $en_power . ') AS ' . $en_power . ', AVG(' . $en_frequency . ') AS ' . $en_frequency . ' FROM [Soreva].[dbo].[dispatch_load] WHERE ' . $en_stateCode . ' = \'' . $stateCode . '\' AND ' . $en_time . ' BETWEEN \'' . $start_date . '\' AND \'' . $end_date . '\' GROUP BY DATEPART(YEAR, ' . $en_time . '), DATEPART(MONTH, ' . $en_time . '), DATEPART(DAY, ' . $en_time . '), DATEPART(HOUR, ' . $en_time . '), DATEPART(MINUTE, ' . $en_time . ') / ' . (string)$granularity;
 
 echo $query;
 

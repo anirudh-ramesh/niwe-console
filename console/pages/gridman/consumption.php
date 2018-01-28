@@ -133,7 +133,7 @@
 											<select name="state" onChange="selectState(this);">
 												<option value="">State</option>
 												<?php while ($row = sqlsrv_fetch_array($result)){ ?>
-												<option value="<?php echo $row[$en_stateName]; ?>"><?php echo $row[$en_stateName]; ?></option>
+												<option value="<?php echo $row[$en_stateCode]; ?>"><?php echo $row[$en_stateCode]; ?></option>
 												<?php }  sqlsrv_close($sidedatabaseHandle);?>
 											</select>
 										</div>
