@@ -24,6 +24,14 @@ $en_parameterNumber = "parameterNumber";
 $en_channelNumber = "channelNumber";
 $en_voltage2irradiance = "voltage2irradiance";
 
+$en_plants = "plants";
+$en_time = "Timestamp";
+$en_stateName = "stateName";
+$en_power = "power";
+$en_frequency = "frequency";
+$en_consumptionTable = "dispatch_load";
+$en_generationTable = "dispatch_source";
+
 $start_time = "00:00:00";
 $end_time = "23:59:00";
 
