@@ -128,14 +128,26 @@
 								<br>
 								<div align="left" class="row">
 									<div class="col-md-12">
-										<?php include('fetchStates.php');	?>
-										<label>State &nbsp</label>
-										<select name="state" onChange="selectState(this);">
-											<option value="">Select</option>
-											<?php while ($row = sqlsrv_fetch_array($result)){ ?>
-											<option value="<?php echo $row[$en_stateName]; ?>"><?php echo $row[$en_stateName]; ?></option>
-											<?php }  sqlsrv_close($sidedatabaseHandle);?>
-										</select>
+										<div class="col-md-3">
+											<?php include('fetchStates.php');	?>
+											<select name="state" onChange="selectState(this);">
+												<option value="">State</option>
+												<?php while ($row = sqlsrv_fetch_array($result)){ ?>
+												<option value="<?php echo $row[$en_stateName]; ?>"><?php echo $row[$en_stateName]; ?></option>
+												<?php }  sqlsrv_close($sidedatabaseHandle);?>
+											</select>
+										</div>
+										<div class="col-md-3">
+											<select id="granularity" name="granularity">
+												<option value="">Granularity</option>
+												<option value="5">5 Minutes</option>
+												<option value="10">10 Minutes</option>
+												<option value="15">15 Minutes</option>
+												<option value="20">20 Minutes</option>
+												<option value="30">30 Minutes</option>
+												<option value="60">60 Minutes</option>
+											</select>
+										</div>
 									</div>
 								</div>
 								<br>
@@ -146,18 +158,6 @@
 										</div>
 										<div class="col-md-3">
 											<input type="text" name="dateTo" id="viewChart_dateTo" class="form-control" placeholder="To Date" />
-										</div>
-										<div class="col-md-3">
-											<label>Periodicity &nbsp</label>
-											<select id="granularity" name="granularity">
-												<option value="">Select</option>
-												<option value="5">5 Minutes</option>
-												<option value="10">10 Minutes</option>
-												<option value="15">15 Minutes</option>
-												<option value="20">20 Minutes</option>
-												<option value="30">30 Minutes</option>
-												<option value="60">60 Minutes</option>
-											</select>
 										</div>
 										<div class="col-md-3">
 											<input type="button" name="View_Chart" id="View_Chart" value="View Chart" class="btn btn-info" />
