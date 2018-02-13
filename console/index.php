@@ -8,8 +8,8 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<title>NIWE - AMS Console</title>
 		<!--<meta http-equiv="refresh" content="240">-->
-		<meta name="description" content="Solar plant operational intelligence software for O&M "><meta name="robots" content="index,follow">
-		<meta name="author" content="Suraj Anand">
+		<meta name="robots" content="index,follow">
+		<meta name="author" content="Anirudh Ramesh">
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 		<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -154,11 +154,13 @@
 
 							<p style="text-align:justify">A Geonica MeteoStation data acquisition and control system digitizes each analog channel and the associated web application software converts data into spectral irradiance calibrated in W/m2-nm.</p>
 						</div>
+						<!-- /.col -->
 					</div>
 					<!-- /.row -->
 				</section>
 				<!-- /.content -->
 			</div>
+			<!-- /.content-wrapper -->
 			<footer class="main-footer">
 				<div class="pull-right hidden-xs">
 					<b>Version</b> 1.0
