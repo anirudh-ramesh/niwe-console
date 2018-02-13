@@ -21,7 +21,7 @@
 		<div class="loader"></div>
 		<center>
 			<div>
-				<div class="logo"><img src="soreva2.png" alt="logo" height="85" width="250"><hr></div>
+				<div class="logo"><img src="soreva.png" alt="logo" height="85" width="250"><hr></div>
 				<div class="main">
 					<span style="color:#006666;">AMS Console</span>
 					<form id="form_id" method="post" action="" name="myform">
