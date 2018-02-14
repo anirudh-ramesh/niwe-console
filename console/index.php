@@ -1,6 +1,6 @@
 <?php
 	include ("../check.php");
-	include("config/config.php");
+	include("config/init.php");
 ?>
 <!DOCTYPE html>
 <html>
