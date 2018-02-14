@@ -49,14 +49,14 @@
 							<li class="dropdown user user-menu">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 									<img src="../../dist/img/logo.jpg" class="user-image" alt="User Image">
-									<!-- <?php echo $login_user; ?>-->SGS Weather
+									<!-- <?php echo $usernameDatabase; ?>-->SGS Weather
 								</a>
 								<ul class="dropdown-menu">
 									<!-- User image -->
 									<li class="user-header">
 										<img src="../../dist/img/logo.jpg" class="img-circle" alt="User Image">
 										<p>
-											<!-- <?php echo $login_user; ?>-->SGS Weather
+											<!-- <?php echo $usernameDatabase; ?>-->SGS Weather
 										</p>
 									</li>
 									<!-- Menu Body -->
@@ -82,7 +82,7 @@
 						</div>
 						<div class="pull-left info">
 							<p>
-								<!-- <?php echo $login_user; ?>-->
+								<!-- <?php echo $usernameDatabase; ?>-->
 								SGS Weather
 							</p>
 						</div>

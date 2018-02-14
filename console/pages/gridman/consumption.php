@@ -64,13 +64,13 @@
 							<li class="dropdown user user-menu">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 									<img src="../../dist/img/logo.jpg" class="user-image" alt="User Image">
-									<!-- <?php echo $login_user; ?>-->Soreva
+									<!-- <?php echo $usernameDatabase; ?>-->Soreva
 								</a>
 								<ul class="dropdown-menu">
 									<li class="user-header">
 										<img src="../../dist/img/logo.jpg" class="img-circle" alt="User Image">
 										<p>
-											<!-- <?php echo $login_user; ?>-->Soreva
+											<!-- <?php echo $usernameDatabase; ?>-->Soreva
 										</p>
 									</li>
 									<li class="user-footer">
@@ -92,7 +92,7 @@
 						</div>
 						<div class="pull-left info">
 							<p>
-								<!-- <?php echo $login_user; ?>-->Soreva
+								<!-- <?php echo $usernameDatabase; ?>-->Soreva
 							</p>
 						</div>
 					</div>

@@ -61,12 +61,12 @@
 							<li class="dropdown user user-menu">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 									<img src="dist/img/logo.jpg" class="user-image" alt="User Image">
-									<!-- <?php echo $login_user; ?> -->SGS Weather
+									<!-- <?php echo $usernameDatabase; ?> -->SGS Weather
 								</a>
 								<ul class="dropdown-menu">
 									<li class="user-header">
 										<img src="dist/img/logo.jpg" class="img-circle" alt="User Image">
-										<!-- <?php echo $login_user; ?>-->SGS Weather
+										<!-- <?php echo $usernameDatabase; ?>-->SGS Weather
 									</li>
 									<li class="user-footer">
 										<div class="pull-right">
@@ -86,7 +86,7 @@
 							<img src="dist/img/logo.jpg" class="img-circle" alt="User Image">
 						</div>
 						<div class="pull-left info">
-							<!-- <?php echo $login_user; ?>-->SGS Weather
+							<!-- <?php echo $usernameDatabase; ?>-->SGS Weather
 						</div>
 					</div>
 					<ul class="sidebar-menu">
